@@ -1,6 +1,7 @@
 {{
 	config(
-		materialized='table'
+		materialized='table',
+		dataset='silver'
 	) 
 }}
 
@@ -8,7 +9,7 @@ WITH source AS (
       SELECT
 		*
       FROM 
-            {{ source('bronze', 'raw_seed_regions') }}
+            {{ ref('raw_seed_regions') }}
 )
 SELECT
 	*
