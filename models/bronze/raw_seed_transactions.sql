@@ -8,7 +8,7 @@ WITH source AS (
       SELECT
 		*
       FROM 
-            {{ source('bronze', 'Overall_Transactions') }}
+            {{ ref('Overall_Transactions') }}
 )
 SELECT
 	*
