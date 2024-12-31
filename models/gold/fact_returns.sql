@@ -1,7 +1,7 @@
 {{
 	config(
 		materialized='table',
-		dataset='silver'
+		dataset='gold'
 	) 
 }}
 
