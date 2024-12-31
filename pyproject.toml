@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-
+dbt-bigquery = "^1.9.0"
 
 [build-system]
 requires = ["poetry-core"]
