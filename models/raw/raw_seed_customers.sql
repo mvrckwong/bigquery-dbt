@@ -8,7 +8,7 @@ WITH source AS (
       SELECT
 		*
       FROM 
-            {{ source('bronze', 'Calendar') }}
+            {{ source('bronze', 'Customers') }}
 )
 SELECT
 	*
