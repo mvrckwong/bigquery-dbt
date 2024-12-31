@@ -41,7 +41,7 @@ models:
     # Config indicated by + and applies to all files under models/example/
     bronze:
       +materialized: table
-      +schema: raw
+      +database: bronze
       +tags:
         - "raw"
         - "intermediate"
@@ -53,7 +53,7 @@ models:
         - "staging"
     gold:
       +materialized: table
-      +schema: prod
+      +database: prod
       +tags:
         - "prod"
         - "production"
