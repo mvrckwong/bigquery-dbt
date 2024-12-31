@@ -5,11 +5,9 @@ models:
       - name: customer_id
         tests:
           - not_null
-
       - name: product_id
         tests:
           - not_null
-
       - name: store_id
         tests:
           - not_null
