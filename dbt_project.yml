@@ -47,7 +47,7 @@ models:
         - "intermediate"
     silver:
       +materialized: table
-      +schema: stg
+      +database: silver
       +tags:
         - "stg"
         - "staging"
