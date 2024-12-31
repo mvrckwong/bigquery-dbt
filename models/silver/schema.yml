@@ -3,11 +3,14 @@ models:
   - name: stg_seed_transactions
     columns:
       - name: customer_id
+        description: foreign key for the table.
         tests:
           - not_null
       - name: product_id
+        description: foreign key for the table.
         tests:
           - not_null
       - name: store_id
+        description: foreign key for the table.
         tests:
           - not_null
