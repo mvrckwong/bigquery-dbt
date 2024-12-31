@@ -38,22 +38,13 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
   bigquery-general:
-    # Config indicated by + and applies to all files under models/example/
+    +materialized: table  # Default materialization for all models
     bronze:
-      +materialized: table
-      +database: bronze
-      +tags:
-        - "raw"
-        - "intermediate"
+      +schema: bronze    # Use schema instead of database for BigQuery
+      +tags: ["raw", "intermediate"]
     silver:
-      +materialized: table
-      +database: silver
-      +tags:
-        - "stg"
-        - "staging"
+      +schema: silver
+      +tags: ["stg", "staging"]
     gold:
-      +materialized: table
-      +database: prod
-      +tags:
-        - "prod"
-        - "production"
+      +schema: prod
+      +tags: ["prod", "production"]
