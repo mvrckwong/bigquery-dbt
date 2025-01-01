@@ -14,3 +14,22 @@ models:
         description: foreign key for the table.
         tests:
           - not_null
+  
+  - name: stg_seed_products
+    columns:
+      - name: product_id
+        description: primary key for the table.
+        tests:
+          - not_null
+          - unique
+      - name: product_sku
+        description: key for the table.
+        tests:
+          - not_null
+          - unique
+      # - name: recyclable
+      #   description: binary checks for the table. 
+      #   tests:
+      #     - accepted_values:
+      #         values: ['0', '1']
+      #     - not_null
