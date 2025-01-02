@@ -10,6 +10,8 @@ WITH source AS (
 		*
       FROM 
             {{ ref('raw_seed_regions') }}
+	ORDER BY
+		region_id DESC
 )
 SELECT
 	*

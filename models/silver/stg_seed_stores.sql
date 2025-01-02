@@ -22,6 +22,8 @@ WITH source AS (
 		, grocery_sqft AS store_grocery_sqft
       FROM 
             {{ ref('raw_seed_stores') }}
+	ORDER BY
+		store_id ASC
 )
 SELECT
 	*

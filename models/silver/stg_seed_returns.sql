@@ -10,6 +10,8 @@ WITH source AS (
 		*
       FROM 
             {{ ref('raw_seed_returns') }}
+	ORDER BY
+		return_date ASC
 )
 SELECT
 	*
