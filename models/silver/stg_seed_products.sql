@@ -14,8 +14,8 @@ WITH source AS (
 		, product_retail_price
 		, product_cost
 		, product_weight
-		, IFNULL(recyclable, 0) AS is_product_recyclable
-		, IFNULL(low_fat, 0) AS is_product_lowfat 
+		, CAST(IFNULL(recyclable, 0) AS BOOL) AS is_product_recyclable
+		, CAST(IFNULL(low_fat, 0) AS BOOL) AS is_product_lowfat 
       FROM
 		{{ ref('raw_seed_products') }}
 	ORDER BY
