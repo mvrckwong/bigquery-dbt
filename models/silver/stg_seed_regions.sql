@@ -8,6 +8,7 @@
 WITH source AS (
       SELECT
 		*
+		, CURRENT_TIMESTAMP() AS created_at 
       FROM 
             {{ ref('raw_seed_regions') }}
 	ORDER BY

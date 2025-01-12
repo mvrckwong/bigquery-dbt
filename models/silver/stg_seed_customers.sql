@@ -27,6 +27,7 @@ WITH source AS (
 		, member_card AS customer_member_card
 		, occupation AS customer_occupation
 		, homeowner AS is_customer_homeowner
+		, CURRENT_TIMESTAMP() AS created_at 
       FROM 
             {{ ref('raw_seed_customers') }}
 )

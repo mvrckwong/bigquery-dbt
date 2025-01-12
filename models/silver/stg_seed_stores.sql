@@ -20,6 +20,7 @@ WITH source AS (
 		, last_remodel_date AS store_last_remodel_date
 		, total_sqft AS store_total_sqft
 		, grocery_sqft AS store_grocery_sqft
+		, CURRENT_TIMESTAMP() AS _created_date 
       FROM 
             {{ ref('raw_seed_stores') }}
 	ORDER BY

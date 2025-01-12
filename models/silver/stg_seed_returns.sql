@@ -6,10 +6,11 @@
 }}
 
 WITH source AS (
-      SELECT
+	SELECT
 		*
-      FROM 
-            {{ ref('raw_seed_returns') }}
+		, CURRENT_TIMESTAMP() AS created_at 
+	FROM 
+		{{ ref('raw_seed_returns') }}
 	ORDER BY
 		return_date ASC
 )
