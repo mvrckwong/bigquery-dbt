@@ -3,8 +3,6 @@ x-common-config:
   &dbt-common-config
   image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
   entrypoint: ["dbt"]
-  environment:
-    - DBT_KEYFILE=/root/.dbt/bigquery-general.json
   volumes:
     - .:/usr/app
     - type: volume
