@@ -20,7 +20,7 @@ services:
   # docker-compose exec dbt dbt test
   # docker-compose exec dbt dbt docs generate
 
-  dbt:
+  run:
     <<: *dbt-common-config
     tty: true
     working_dir: /usr/app
@@ -28,6 +28,7 @@ services:
   test:
     <<: *dbt-common-config
     tty: true
+    restart: no
     command:
       ["test"]
     profiles:
