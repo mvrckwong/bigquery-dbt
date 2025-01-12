@@ -1,24 +1,23 @@
 name: dbt-instance
-
+x-common-config:
+  &dbt-common-config
+  image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
+  entrypoint: ["dbt"]
+  volumes:
+    - .:/usr/app
+    - type: volume
+      source: dbt_config
+      target: /root/.dbt
+      read_only: true
 
 services:
-
-  dbt-docs:
-    image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
-    tty: true
-    restart: always
-    entrypoint: ["dbt"]
-    ports:
-      - "8001:8001"
+  docs:
+    <<: *dbt-common-config
     command:
-      ["docs", "serve", "--port", "8001", "--host", "0.0.0.0"]
-    volumes:
-      - .:/usr/app
-      - type: volume
-        source: dbt_config
-        target: /root/.dbt
-        read_only: true
-      
+      ["docs", "serve", "--port", "8080", "--host", "0.0.0.0"]
+    ports:
+      - "8881:8080"
+    
 volumes:
   dbt_config:
     driver: local
