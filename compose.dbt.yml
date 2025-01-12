@@ -15,16 +15,6 @@ x-common-config:
     - .env
 
 services:
-  # How to run the commands externally.
-  # docker-compose exec dbt dbt run
-  # docker-compose exec dbt dbt test
-  # docker-compose exec dbt dbt docs generate
-
-  run:
-    <<: *dbt-common-config
-    tty: true
-    working_dir: /usr/app
-
   test:
     <<: *dbt-common-config
     tty: true
@@ -34,7 +24,7 @@ services:
     profiles:
       - test
 
-  ui:
+  run:
     <<: *dbt-common-config
     tty: true
     command:
@@ -53,3 +43,8 @@ volumes:
 networks:
   data_network:
     driver: bridge
+
+# How to run the commands externally.
+# docker-compose exec dbt dbt run
+# docker-compose exec dbt dbt test
+# docker-compose exec dbt dbt docs generate
