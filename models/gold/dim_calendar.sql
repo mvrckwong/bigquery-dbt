@@ -25,6 +25,5 @@ SELECT
 	, EXTRACT(QUARTER FROM calendar_date) AS quarter
 	, EXTRACT(YEAR FROM calendar_date) AS year
 	, EXTRACT(ISOYEAR FROM calendar_date) AS iso_year
-	, CURRENT_DATE AS current_date
 FROM 
       source
