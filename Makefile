@@ -1,7 +1,3 @@
-# Set default values
-PORT_DBT := 8282
-HOME := $(shell pwd)
-
 install_init_reqs:
 	pip install uv
 
@@ -13,10 +9,5 @@ run_dbt_docs:
 	uv run dbt docs serve --port 8888
 
 run_compose_dbt:
-	echo "Port: ${PORT_DBT}"
 	docker compose -f 'compose.dbt.yml' down
 	docker compose -f 'compose.dbt.yml' up -d --build
-
-test:
-	echo "Port: ${PORT_DBT}"
-	echo "Test Home: ${HOME}"

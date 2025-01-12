@@ -3,21 +3,39 @@ x-common-config:
   &dbt-common-config
   image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
   entrypoint: ["dbt"]
+  environment:
+    - DBT_KEYFILE=/root/.dbt/bigquery-general.json
   volumes:
     - .:/usr/app
     - type: volume
       source: dbt_config
       target: /root/.dbt
       read_only: true
+  networks:
+    - data_network
+  env_file: 
+    - .env
 
 services:
-  docs:
+  run:
+    <<: *dbt-common-config
+    tty: true
+    command:
+      ["run"]
+
+  test:
+    <<: *dbt-common-config
+    tty: true
+    command:
+      ["test"]
+
+  ui:
     <<: *dbt-common-config
     tty: true
     command:
       ["docs", "serve", "--port", "8080", "--host", "0.0.0.0"]
     ports:
-      - "8881:8080"
+      - "${PORT_DBT_UI:-8888}:8080"
     
 volumes:
   dbt_config:
@@ -25,7 +43,11 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ''
+      device: '~/.dbt'
+
+networks:
+  data_network:
+    driver: bridge
 
 # Mount your Google Cloud credentials if using service account authentication
 #   #     - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
