@@ -1,14 +1,9 @@
-[tool.poetry]
+[project]
 name = "bigquery-dbt"
 version = "0.1.0"
-description = ""
-authors = ["Maverick Wong <mvrck.wong@gmail.com>"]
+description = "Add your description here"
 readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.11"
-dbt-bigquery = "^1.9.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires-python = ">=3.11"
+dependencies = [
+    "dbt-bigquery>=1.9.1",
+]
