@@ -15,17 +15,23 @@ x-common-config:
     - .env
 
 services:
-  run:
+  # How to run the commands externally.
+  # docker-compose exec dbt dbt run
+  # docker-compose exec dbt dbt test
+  # docker-compose exec dbt dbt docs generate
+
+  dbt:
     <<: *dbt-common-config
     tty: true
-    command:
-      ["run"]
+    working_dir: /usr/app
 
   test:
     <<: *dbt-common-config
     tty: true
     command:
       ["test"]
+    profiles:
+      - test
 
   ui:
     <<: *dbt-common-config
@@ -46,6 +52,3 @@ volumes:
 networks:
   data_network:
     driver: bridge
-
-# Mount your Google Cloud credentials if using service account authentication
-#   #     - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
