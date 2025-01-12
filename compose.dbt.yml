@@ -17,7 +17,7 @@ services:
     command:
       ["docs", "serve", "--port", "8080", "--host", "0.0.0.0"]
     ports:
-      - "${DBT_PORT}:8080"
+      - "8881:8080"
     
 volumes:
   dbt_config:
@@ -25,7 +25,7 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: C:\Users\Maverick\.dbt
+      device: ''
 
 # Mount your Google Cloud credentials if using service account authentication
 #   #     - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
