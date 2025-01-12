@@ -1,16 +1,44 @@
 name: dbt-instance
 
+
 services:
+
   dbt-docs:
-    image: ghcr.io/dbt-labs/dbt-bigquery:1.3.latest
+    image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
     tty: true
     restart: always
     entrypoint: ["dbt"]
     ports:
       - "8001:8001"
     command:
-      ["docs", "serve", "--port", "8001"]
+      ["docs", "serve", "--port", "8001", "--host", "0.0.0.0"]
+    volumes:
+      - .:/usr/app
+      - type: volume
+        source: dbt_config
+        target: /root/.dbt
+        read_only: true
+      
+volumes:
+  dbt_config:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: C:\Users\Maverick\.dbt
 
+# name: dbt-instance
+
+# services:
+#   dbt-docs:
+#     image: ghcr.io/dbt-labs/dbt-bigquery:1.3.latest
+#     tty: true
+#     restart: always
+#     entrypoint: ["dbt"]
+#     ports:
+#       - "8001:8001"
+#     command:
+#       ["docs", "serve", "--port", "8001"]
 
 
 # name: dbt-instance
