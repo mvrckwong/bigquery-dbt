@@ -1,27 +1,44 @@
 name: dbt-instance
 
 services:
-  dbt:
-    build: .
-    volumes:
-      - .:/usr/app
-      - ~/.dbt:/root/.dbt
-      # Mount your Google Cloud credentials if using service account authentication
-      - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
-    environment:
-      - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-credentials.json
-    command: >
-      bash -c "dbt deps && dbt debug && dbt run"
-
   dbt-docs:
-    build: .
+    image: ghcr.io/dbt-labs/dbt-bigquery:1.3.latest
+    tty: true
+    restart: always
+    entrypoint: ["dbt"]
     ports:
-      - "8080:8080"
-    # volumes:
-    #   - .:/usr/app
-    #   - ~/.dbt:/root/.dbt
-    #   - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
-    # environment:
-    #   - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-credentials.json
-    command: >
-      bash -c "dbt deps && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
+      - "8001:8001"
+    command:
+      ["docs", "serve", "--port", "8001"]
+
+
+
+# name: dbt-instance
+
+# services:
+#   # dbt:
+#   #   build: .
+#   #   volumes:
+#   #     - .:/usr/app
+#   #     - ~/.dbt:/root/.dbt
+#   #     # Mount your Google Cloud credentials if using service account authentication
+#   #     - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
+#   #   environment:
+#   #     - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-credentials.json
+#   #   command: >
+#   #     bash -c "dbt deps && dbt debug && dbt run"
+
+#   dbt-docs:
+#     image: ghcr.io/dbt-labs/dbt-bigquery:1.3.latest
+#     ports:
+#       - "8080:8080"
+#     volumes:
+#       - .:/usr/app
+#       - ~/.dbt:/root/.dbt
+#       - ${GOOGLE_APPLICATION_CREDENTIALS}:/root/gcp-credentials.json:ro
+#     environment:
+#       - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-credentials.json
+#     working_dir: /usr/app
+#     entrypoint: ["dbt"]
+#     command: ["docs", "serve", "--port", "8080", "--host", "0.0.0.0"]
+#     tty: true
