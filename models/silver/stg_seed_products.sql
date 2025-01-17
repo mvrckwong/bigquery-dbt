@@ -7,7 +7,8 @@
 
 WITH source AS (
       SELECT
-		product_id
+		{{ dbt_utils.generate_surrogate_key(['product_id']) }} as product_key,
+		, product_id
 		, product_brand
 		, product_name
 		, product_sku
@@ -26,3 +27,5 @@ SELECT
 	*
 FROM 
       source
+
+
