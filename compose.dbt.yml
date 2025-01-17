@@ -15,16 +15,21 @@ x-common-config:
     - .env
 
 services:
+  run:
+    <<: *dbt-common-config
+    tty: true
+    restart: no
+    command:
+      ["run"]
+
   test:
     <<: *dbt-common-config
     tty: true
     restart: no
     command:
       ["test"]
-    profiles:
-      - test
 
-  run:
+  ui:
     <<: *dbt-common-config
     tty: true
     command:
