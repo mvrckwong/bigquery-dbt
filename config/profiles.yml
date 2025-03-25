@@ -9,6 +9,7 @@ bigquery-general-profile:
       dataset:  bronze
       threads:  4
       keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
+      retries:  3
     
     silver:
       type:     "{{ env_var('DBT_TYPE') }}"
@@ -17,6 +18,7 @@ bigquery-general-profile:
       dataset:  silver
       threads:  4
       keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
+      retries:  3
       
     gold:
       type:     "{{ env_var('DBT_TYPE') }}"
@@ -25,6 +27,7 @@ bigquery-general-profile:
       dataset:  gold
       threads:  4
       keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
+      retries:  3
         
     marts:
       type:     "{{ env_var('DBT_TYPE') }}"
@@ -33,4 +36,5 @@ bigquery-general-profile:
       dataset:  gold
       threads:  4
       keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
+      retries:  3
       

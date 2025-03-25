@@ -42,3 +42,19 @@ services:
     # depends_on:
     #   ui:
     #     condition: service_healthy
+
+  build:
+    <<: *dbt-common-config
+    profiles:
+      - build
+    command: ["build"]
+
+  wait:
+    <<: *dbt-common-config
+    tty: true
+    entrypoint: /bin/sh
+    command: ["tail", "-f", "/dev/null"]
+
+networks:
+  data_network:
+    external: true
