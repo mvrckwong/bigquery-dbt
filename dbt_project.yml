@@ -64,9 +64,19 @@ models:
       +tags: ["prod", "gold"]
       +labels:
         data_layer: gold
+    marts:
+      +materialized: incremental
+      +schema: gold
+      +persist_docs:
+        relation: true
+        columns: true
+      +tags: ["prod", "marts"]
+      +labels:
+        data_layer: marts
+      
 
-snapshots:
-  bigquery_general:
-    +schema: silver
-    +target_schema: silver
-    +enabled: true
+# snapshots:
+#   bigquery_general:
+#     +schema: silver
+#     +target_schema: silver
+#     +enabled: true

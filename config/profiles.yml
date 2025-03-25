@@ -8,18 +8,7 @@ bigquery-general-profile:
       project: "bqtest-444723"
       dataset: bronze
       threads: 4
-      keyfile_json:
-        type: "bqtest-444723"
-        project_id: "service_account"
-        private_key_id: "b7be13b623a9b5007dd867005f0afc3505510798"
-        private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC4TIA2q+ZNl67r\n7ekLQfe0AeUqXFAVW+MOI9NgFCtS8rIQYm5qxJu5q7wXVy6qbnOXzvzHVgQQGXmR\nGp4H8+GaX2AvZ+EL/kBrLqBLAy/O9uZVTOVo1KQYcF707T0olF4QSrP2nm5YoIRh\nLLy1ECxEgGReKxXRC8EezGNF3IjblYzQDvrn804l/ywHOMsyaACkTl8DDlw4NzB3\nMwlag0ho2DVK+Ggt+SANAcBVvZfyHFe4myemnj60KIaidab3o52qQC3v/J0HP8jo\nUNDF8nhi5F2wDTn3LdxHpXKmLyr8CVjhtvvS+aCzU12IovMugSLIw5ZecPOZLgdY\nlMXkfWOtAgMBAAECggEACSSnymPmKGdOuEm0oWhZFPHFyr+LAY7uHsohjHIJDDPE\n0xHvDxZIm4Is8gN96dqnmsUcE/pCeAIA3qAGwwzoXl4+SVvKoGuxX8qPt+j6kDao\n4AZ77c15g/TfNnYmmJgeaonU5SFLBtPqfV+uJQAeZ2+Z4HTGv6OTpdGCA09DmDvS\nPkgLiwD1WFSrbkPyD9B9iHN2cfjiOezHH3vx8Jcvg9L7oOrZPlZqLzWvBXluHoJI\nQNBNq07nwL17xxwjVWbHO//Xxun9Who2EMmDH75zEn/upTBommfWTBl/ulFrpILD\nrFFtTMvNUXl0a6+rt5/01zNIHUnzzYV4N4GbmcB/wQKBgQDbRnLiG2HlsQ/f3kFQ\nf0Bib616qQ94kAvIPA2Erlq7NV0QXLY2yox4BZz3knKMYgi6r2egBn3TWt71cAyd\nBmRMyNPpD8pvFQwh2ql+ErWLeI2gn4iGKKd0+VXhYcgT1Mqp+2x4jCBQnC++9ppU\nSdcT+ZPzJZcYjlG4yq87aHIliQKBgQDXKmub1vlrFbbjXcUCaKBLWkqUCCl/H/sI\nXH/ZPwue3Rf6k/0MmoPDkFqVLX/9Bwrx4WvrfpeLIki9MLy6Po7lKOI8DNT8i2fe\nP4BGymuUE/AUlY2kakjUEqTujwHj7V4O+ndRZHjgmnbGHI0M+G08fZrg9Zq6Rtzn\npaLyhStoBQKBgDwRS21XNPU4EPIxr1C+20Nb9njwkRVk2GVs1gMvxBkeoDTYQO43\nhE1otDw5uPlt7Zg+brOus49PiF5R6JKnapiCN1LUCY9ug5lOjjnEJEllp96FdV/T\nCTSJDRals6qDE1WHU4qeUEfk0UuNwG8wnyOQrg/gj0ihzA9ELsamcQaJAoGBALFc\nUFOngvWYcqc89laj8+3pQayAheQ6cm1UAjcL1wJe8ZMmReMLwy2DYoexd90U3xq/\nXHxEX5ra6ea5s/g59QRFDSe+1BpQt4/l/FFeLgtj2/S7yoQK8HmP3NCgpUhCs9PY\n9l3rWhCagumPQ127sh+40eA51A9Utmdki8spprwZAoGAUOPkyMs8plp1f759qQ6d\niaxLvZUQOIn3LpobQVl4ykunSSY5r5uhk9aZfp5qGPZmbw0tJ95qanwbhyzvT2Ox\nLeKODTw1vWulXBHChcubN8PiFdXRwcJ339d2dnR5YhSi5zTmoJSMMcRzAA44pCv5\nQK2cPvPb/2Wami4Y3WJRNOA=\n-----END PRIVATE KEY-----\n"
-        client_email: "projectlocal-dev@bqtest-444723.iam.gserviceaccount.com"
-        client_id: "100740503237063586606"
-        auth_uri: "https://accounts.google.com/o/oauth2/auth"
-        token_uri: "https://oauth2.googleapis.com/token"
-        auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/projectlocal-dev%40bqtest-444723.iam.gserviceaccount.com"
-        universe_domain: "googleapis.com"
+      keyfile: /root/.dbt/bq-keyfile.json
     
     silver:
       type: bigquery
@@ -27,34 +16,21 @@ bigquery-general-profile:
       project: "bqtest-444723"
       dataset: silver
       threads: 4
-      keyfile_json:
-        type: "bqtest-444723"
-        project_id: "service_account"
-        private_key_id: "b7be13b623a9b5007dd867005f0afc3505510798"
-        private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC4TIA2q+ZNl67r\n7ekLQfe0AeUqXFAVW+MOI9NgFCtS8rIQYm5qxJu5q7wXVy6qbnOXzvzHVgQQGXmR\nGp4H8+GaX2AvZ+EL/kBrLqBLAy/O9uZVTOVo1KQYcF707T0olF4QSrP2nm5YoIRh\nLLy1ECxEgGReKxXRC8EezGNF3IjblYzQDvrn804l/ywHOMsyaACkTl8DDlw4NzB3\nMwlag0ho2DVK+Ggt+SANAcBVvZfyHFe4myemnj60KIaidab3o52qQC3v/J0HP8jo\nUNDF8nhi5F2wDTn3LdxHpXKmLyr8CVjhtvvS+aCzU12IovMugSLIw5ZecPOZLgdY\nlMXkfWOtAgMBAAECggEACSSnymPmKGdOuEm0oWhZFPHFyr+LAY7uHsohjHIJDDPE\n0xHvDxZIm4Is8gN96dqnmsUcE/pCeAIA3qAGwwzoXl4+SVvKoGuxX8qPt+j6kDao\n4AZ77c15g/TfNnYmmJgeaonU5SFLBtPqfV+uJQAeZ2+Z4HTGv6OTpdGCA09DmDvS\nPkgLiwD1WFSrbkPyD9B9iHN2cfjiOezHH3vx8Jcvg9L7oOrZPlZqLzWvBXluHoJI\nQNBNq07nwL17xxwjVWbHO//Xxun9Who2EMmDH75zEn/upTBommfWTBl/ulFrpILD\nrFFtTMvNUXl0a6+rt5/01zNIHUnzzYV4N4GbmcB/wQKBgQDbRnLiG2HlsQ/f3kFQ\nf0Bib616qQ94kAvIPA2Erlq7NV0QXLY2yox4BZz3knKMYgi6r2egBn3TWt71cAyd\nBmRMyNPpD8pvFQwh2ql+ErWLeI2gn4iGKKd0+VXhYcgT1Mqp+2x4jCBQnC++9ppU\nSdcT+ZPzJZcYjlG4yq87aHIliQKBgQDXKmub1vlrFbbjXcUCaKBLWkqUCCl/H/sI\nXH/ZPwue3Rf6k/0MmoPDkFqVLX/9Bwrx4WvrfpeLIki9MLy6Po7lKOI8DNT8i2fe\nP4BGymuUE/AUlY2kakjUEqTujwHj7V4O+ndRZHjgmnbGHI0M+G08fZrg9Zq6Rtzn\npaLyhStoBQKBgDwRS21XNPU4EPIxr1C+20Nb9njwkRVk2GVs1gMvxBkeoDTYQO43\nhE1otDw5uPlt7Zg+brOus49PiF5R6JKnapiCN1LUCY9ug5lOjjnEJEllp96FdV/T\nCTSJDRals6qDE1WHU4qeUEfk0UuNwG8wnyOQrg/gj0ihzA9ELsamcQaJAoGBALFc\nUFOngvWYcqc89laj8+3pQayAheQ6cm1UAjcL1wJe8ZMmReMLwy2DYoexd90U3xq/\nXHxEX5ra6ea5s/g59QRFDSe+1BpQt4/l/FFeLgtj2/S7yoQK8HmP3NCgpUhCs9PY\n9l3rWhCagumPQ127sh+40eA51A9Utmdki8spprwZAoGAUOPkyMs8plp1f759qQ6d\niaxLvZUQOIn3LpobQVl4ykunSSY5r5uhk9aZfp5qGPZmbw0tJ95qanwbhyzvT2Ox\nLeKODTw1vWulXBHChcubN8PiFdXRwcJ339d2dnR5YhSi5zTmoJSMMcRzAA44pCv5\nQK2cPvPb/2Wami4Y3WJRNOA=\n-----END PRIVATE KEY-----\n"
-        client_email: "projectlocal-dev@bqtest-444723.iam.gserviceaccount.com"
-        client_id: "100740503237063586606"
-        auth_uri: "https://accounts.google.com/o/oauth2/auth"
-        token_uri: "https://oauth2.googleapis.com/token"
-        auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/projectlocal-dev%40bqtest-444723.iam.gserviceaccount.com"
-        universe_domain: "googleapis.com"
-    
+      keyfile: /root/.dbt/bq-keyfile.json
+      
     gold:
       type: bigquery
       method: service-account
       project: "bqtest-444723"
       dataset: gold
       threads: 4
-      keyfile_json:
-        type: "bqtest-444723"
-        project_id: "service_account"
-        private_key_id: "b7be13b623a9b5007dd867005f0afc3505510798"
-        private_key: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC4TIA2q+ZNl67r\n7ekLQfe0AeUqXFAVW+MOI9NgFCtS8rIQYm5qxJu5q7wXVy6qbnOXzvzHVgQQGXmR\nGp4H8+GaX2AvZ+EL/kBrLqBLAy/O9uZVTOVo1KQYcF707T0olF4QSrP2nm5YoIRh\nLLy1ECxEgGReKxXRC8EezGNF3IjblYzQDvrn804l/ywHOMsyaACkTl8DDlw4NzB3\nMwlag0ho2DVK+Ggt+SANAcBVvZfyHFe4myemnj60KIaidab3o52qQC3v/J0HP8jo\nUNDF8nhi5F2wDTn3LdxHpXKmLyr8CVjhtvvS+aCzU12IovMugSLIw5ZecPOZLgdY\nlMXkfWOtAgMBAAECggEACSSnymPmKGdOuEm0oWhZFPHFyr+LAY7uHsohjHIJDDPE\n0xHvDxZIm4Is8gN96dqnmsUcE/pCeAIA3qAGwwzoXl4+SVvKoGuxX8qPt+j6kDao\n4AZ77c15g/TfNnYmmJgeaonU5SFLBtPqfV+uJQAeZ2+Z4HTGv6OTpdGCA09DmDvS\nPkgLiwD1WFSrbkPyD9B9iHN2cfjiOezHH3vx8Jcvg9L7oOrZPlZqLzWvBXluHoJI\nQNBNq07nwL17xxwjVWbHO//Xxun9Who2EMmDH75zEn/upTBommfWTBl/ulFrpILD\nrFFtTMvNUXl0a6+rt5/01zNIHUnzzYV4N4GbmcB/wQKBgQDbRnLiG2HlsQ/f3kFQ\nf0Bib616qQ94kAvIPA2Erlq7NV0QXLY2yox4BZz3knKMYgi6r2egBn3TWt71cAyd\nBmRMyNPpD8pvFQwh2ql+ErWLeI2gn4iGKKd0+VXhYcgT1Mqp+2x4jCBQnC++9ppU\nSdcT+ZPzJZcYjlG4yq87aHIliQKBgQDXKmub1vlrFbbjXcUCaKBLWkqUCCl/H/sI\nXH/ZPwue3Rf6k/0MmoPDkFqVLX/9Bwrx4WvrfpeLIki9MLy6Po7lKOI8DNT8i2fe\nP4BGymuUE/AUlY2kakjUEqTujwHj7V4O+ndRZHjgmnbGHI0M+G08fZrg9Zq6Rtzn\npaLyhStoBQKBgDwRS21XNPU4EPIxr1C+20Nb9njwkRVk2GVs1gMvxBkeoDTYQO43\nhE1otDw5uPlt7Zg+brOus49PiF5R6JKnapiCN1LUCY9ug5lOjjnEJEllp96FdV/T\nCTSJDRals6qDE1WHU4qeUEfk0UuNwG8wnyOQrg/gj0ihzA9ELsamcQaJAoGBALFc\nUFOngvWYcqc89laj8+3pQayAheQ6cm1UAjcL1wJe8ZMmReMLwy2DYoexd90U3xq/\nXHxEX5ra6ea5s/g59QRFDSe+1BpQt4/l/FFeLgtj2/S7yoQK8HmP3NCgpUhCs9PY\n9l3rWhCagumPQ127sh+40eA51A9Utmdki8spprwZAoGAUOPkyMs8plp1f759qQ6d\niaxLvZUQOIn3LpobQVl4ykunSSY5r5uhk9aZfp5qGPZmbw0tJ95qanwbhyzvT2Ox\nLeKODTw1vWulXBHChcubN8PiFdXRwcJ339d2dnR5YhSi5zTmoJSMMcRzAA44pCv5\nQK2cPvPb/2Wami4Y3WJRNOA=\n-----END PRIVATE KEY-----\n"
-        client_email: "projectlocal-dev@bqtest-444723.iam.gserviceaccount.com"
-        client_id: "100740503237063586606"
-        auth_uri: "https://accounts.google.com/o/oauth2/auth"
-        token_uri: "https://oauth2.googleapis.com/token"
-        auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs"
-        client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/projectlocal-dev%40bqtest-444723.iam.gserviceaccount.com"
-        universe_domain: "googleapis.com"
+      keyfile: /root/.dbt/bq-keyfile.json
+        
+    marts:
+      type: bigquery
+      method: service-account
+      project: "bqtest-444723"
+      dataset: gold
+      threads: 4
+      keyfile: /root/.dbt/bq-keyfile.json
+      
