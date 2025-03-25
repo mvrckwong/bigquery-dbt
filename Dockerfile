@@ -8,7 +8,7 @@ ENV DBT_PROFILES_DIR=/root/.dbt
 
 # Copy necessary files
 COPY /config/profiles.yml /root/.dbt/profiles.yml
-# COPY /config/bq-keyfile.json /root/.dbt/bq-keyfile.json
+COPY /config/bq-keyfile.json /root/.dbt/bq-keyfile.json
 
 # If needed, create a non-root user (check if the image already does this)
 # RUN addgroup -S app && adduser -S app -G app
