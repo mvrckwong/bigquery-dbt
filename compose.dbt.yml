@@ -8,11 +8,14 @@ x-common-config:
     context: .
     dockerfile: Dockerfile
   volumes:
-    - ${DBT_PROJECT_DIR:-.}/analyses:${DBT_CONT_DIR:-/app/dbt}/analyses
-    - ${DBT_PROJECT_DIR:-.}/macros:${DBT_CONT_DIR:-/app/dbt}/macros
-    - ${DBT_PROJECT_DIR:-.}/models:${DBT_CONT_DIR:-/app/dbt}/models
-    - ${DBT_PROJECT_DIR:-.}/snapshots:${DBT_CONT_DIR:-/app/dbt}/snapshots
-    - ${DBT_PROJECT_DIR:-.}/seeds:${DBT_CONT_DIR:-/app/dbt}/seeds
+    - ${DBT_PROJECT_DIR:-.}/analyses:${DBT_CONT_DIR:-/usr/app}/analyses
+    - ${DBT_PROJECT_DIR:-.}/macros:${DBT_CONT_DIR:-/usr/app}/macros
+    - ${DBT_PROJECT_DIR:-.}/models:${DBT_CONT_DIR:-/usr/app}/models
+    - ${DBT_PROJECT_DIR:-.}/snapshots:${DBT_CONT_DIR:-/usr/app}/snapshots
+    - ${DBT_PROJECT_DIR:-.}/seeds:${DBT_CONT_DIR:-/usr/app}/seeds
+    - ${DBT_PROJECT_DIR:-.}/tests:${DBT_CONT_DIR:-/usr/app}/tests
+    - ${DBT_PROJECT_DIR:-.}/target:${DBT_CONT_DIR:-/usr/app}/target
+    - ${DBT_PROJECT_DIR:-.}/dbt_project.yml:${DBT_CONT_DIR:-/usr/app}/dbt_project.yml
   env_file:
     - .env
 
@@ -24,9 +27,18 @@ services:
     command: -c "dbt deps && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
+    # healthcheck:
+    #   test: ["CMD", "curl", "-f", "http://localhost:8080"]
+    #   interval: 30s
+    #   timeout: 10s
+    #   retries: 3
+    #   start_period: 40s
   
   debug:
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
     command: -c "dbt deps && dbt debug"
+    # depends_on:
+    #   ui:
+    #     condition: service_healthy
