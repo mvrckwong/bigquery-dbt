@@ -47,7 +47,7 @@ services:
     entrypoint: /bin/sh
     command: -c "dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
-      - "${PORT_DBT_UI:-8888}:8080"
+      - "${PORT_DBT_UI_PROD:-8888}:8080"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8080"]
       start_period: 30s
