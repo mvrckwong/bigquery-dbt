@@ -18,6 +18,8 @@ x-common-config:
     - ${DBT_PROJECT_DIR:-.}/dbt_project.yml:${DBT_CONT_DIR:-/usr/app}/dbt_project.yml
   env_file:
     - .env
+  secrets:
+    - bq_service_account_key
 
 services:
   ui:

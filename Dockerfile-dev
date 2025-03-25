@@ -1,0 +1,75 @@
+# Stage 1: Base image
+FROM ghcr.io/dbt-labs/dbt-bigquery:1.8.2 AS build
+
+# Set working directory
+WORKDIR /usr/app
+
+# Set environment variable
+ENV DBT_PROFILES_DIR=/root/.dbt \
+	DBT_PROJECT_DIR=/usr/app
+
+# Copy necessary files
+COPY /config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
+COPY /config/bq-keyfile.json ${DBT_PROFILES_DIR}/bq-keyfile.json
+
+# Copy project structure
+COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml
+COPY ./packages.yml ${DBT_PROJECT_DIR}/packages.yml
+
+# Entry point for the application
+ENTRYPOINT [ "dbt" ]
+
+
+# Stage 1: Base image
+# FROM ghcr.io/dbt-labs/dbt-bigquery:1.8.2 AS base
+
+# # Set working directory
+# WORKDIR /usr/app
+
+# # Set environment variable
+# ENV DBT_PROFILES_DIR=/root/.dbt
+
+# # Stage 2: Builder
+# FROM base AS build
+
+# # Copy config files first
+# COPY /config/profiles.yml /root/.dbt/profiles.yml
+# COPY /config/bq-keyfile.json /root/.dbt/bq-keyfile.json
+
+# # Copy project structure
+# COPY ./dbt_project.yml .
+# COPY ./packages.yml .
+# COPY ./models ./models
+# COPY ./macros ./macros
+
+# # Install dependencies
+# RUN dbt deps
+
+# # Stage 3: Production
+# FROM base AS production
+
+# # Create non-root user with explicit home directory
+# RUN addgroup --system --gid 1000 dbtuser && \
+#     adduser --system --uid 1000 --ingroup dbtuser --home /home/dbtuser dbtuser
+
+# # Create and secure directories
+# RUN mkdir -p /home/dbtuser/.dbt && \
+#     chmod 700 /home/dbtuser/.dbt && \
+#     chown -R dbtuser:dbtuser /home/dbtuser
+
+# # Copy config files with explicit permissions
+# COPY --from=build --chown=dbtuser:dbtuser /root/.dbt/profiles.yml /root/.dbt/profiles.yml
+# COPY --from=build --chown=dbtuser:dbtuser /root/.dbt/bq-keyfile.json /root/.dbt/bq-keyfile.json
+
+# # Copy application files
+# COPY --from=build --chown=dbtuser:dbtuser /usr/app /usr/app
+
+# # Switch context to non-root user
+# USER dbtuser
+
+# # Set environment variables for runtime
+# ENV DBT_PROFILES_DIR=/home/dbtuser/.dbt
+# ENV HOME=/home/dbtuser
+
+# # Set Entrypoint
+# ENTRYPOINT [ "dbt" ]

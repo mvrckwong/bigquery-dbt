@@ -1,0 +1,25 @@
+name: dbt-instance-dev
+x-common-config:
+  &dbt-common-config
+  build: 
+    context: .
+    dockerfile: Dockerfile-dev
+  env_file:
+    - .env
+
+services:
+  debug: # Check if its connecting to profiles.yml and to datawarehouse
+    <<: *dbt-common-config
+    command: ["debug"]
+
+  run: # Check if it can run the following models, snapshots, etc.
+    <<: *dbt-common-config
+    command: ["run"]
+
+  ui: # Check for the following lineage
+    <<: *dbt-common-config
+    tty: true
+    entrypoint: /bin/sh
+    command: -c "dbt deps && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
+    ports:
+      - "${PORT_DBT_UI:-8888}:8080"
