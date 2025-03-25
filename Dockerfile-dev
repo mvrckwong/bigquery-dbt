@@ -1,12 +1,13 @@
 # Stage 1: Base image
 FROM ghcr.io/dbt-labs/dbt-bigquery:1.8.2 AS build
 
-# Set working directory
-WORKDIR /usr/app
-
 # Set environment variable
 ENV DBT_PROFILES_DIR=/root/.dbt \
-	DBT_PROJECT_DIR=/usr/app
+	DBT_PROJECT_DIR=/usr/app \
+	ENVIRONMENT=prod
+
+# Set working directory
+WORKDIR ${DBT_PROJECT_DIR}
 
 # Copy necessary files
 COPY /config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
@@ -15,6 +16,16 @@ COPY /config/bq-keyfile.json ${DBT_PROFILES_DIR}/bq-keyfile.json
 # Copy project structure
 COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml
 COPY ./packages.yml ${DBT_PROJECT_DIR}/packages.yml
+
+# Copy project files
+COPY ./analyses ${DBT_PROJECT_DIR}/analyses
+COPY ./macros ${DBT_PROJECT_DIR}/macros
+COPY ./models ${DBT_PROJECT_DIR}/models
+COPY ./snapshots ${DBT_PROJECT_DIR}/snapshots
+COPY ./tests ${DBT_PROJECT_DIR}/tests
+
+# Install dependencies
+RUN ["dbt", "deps"]
 
 # Entry point for the application
 ENTRYPOINT [ "dbt" ]
