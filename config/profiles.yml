@@ -3,34 +3,34 @@ bigquery-general-profile:
 
   outputs:
     bronze:
-      type: "{{ env_var('DBT_TYPE') }}"
-      method: "{{ env_var('DBT_AUTH_METHOD') }}"
-      project: "{{ env_var('DBT_PROJECT') }}"
-      dataset: bronze
-      threads: 4
-      keyfile: "{{ env_var('DBT_KEYFILE_DIR') }}"
+      type:     "{{ env_var('DBT_TYPE') }}"
+      method:   "{{ env_var('DBT_AUTH_METHOD') }}"
+      project:  "{{ env_var('DBT_PROJECT') }}"
+      dataset:  bronze
+      threads:  4
+      keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
     
     silver:
-      type: "{{ env_var('DBT_TYPE') }}"
-      method: "{{ env_var('DBT_AUTH_METHOD') }}"
-      project: "{{ env_var('DBT_PROJECT') }}"
-      dataset: silver
-      threads: 4
-      keyfile: "{{ env_var('DBT_KEYFILE_DIR') }}"
+      type:     "{{ env_var('DBT_TYPE') }}"
+      method:   "{{ env_var('DBT_AUTH_METHOD') }}"
+      project:  "{{ env_var('DBT_PROJECT') }}"
+      dataset:  silver
+      threads:  4
+      keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
       
     gold:
-      type: "{{ env_var('DBT_TYPE') }}"
-      method: "{{ env_var('DBT_AUTH_METHOD') }}"
-      project: "{{ env_var('DBT_PROJECT') }}"
-      dataset: gold
-      threads: 4
-      keyfile: "{{ env_var('DBT_KEYFILE_DIR') }}"
+      type:     "{{ env_var('DBT_TYPE') }}"
+      method:   "{{ env_var('DBT_AUTH_METHOD') }}"
+      project:  "{{ env_var('DBT_PROJECT') }}"
+      dataset:  gold
+      threads:  4
+      keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
         
     marts:
-      type: "{{ env_var('DBT_TYPE') }}"
-      method: "{{ env_var('DBT_AUTH_METHOD') }}"
-      project: "{{ env_var('DBT_PROJECT') }}"
-      dataset: gold
-      threads: 4
-      keyfile: "{{ env_var('DBT_KEYFILE_DIR') }}"
+      type:     "{{ env_var('DBT_TYPE') }}"
+      method:   "{{ env_var('DBT_AUTH_METHOD') }}"
+      project:  "{{ env_var('DBT_PROJECT') }}"
+      dataset:  gold
+      threads:  4
+      keyfile:  "{{ env_var('DBT_KEYFILE_DIR') }}"
       
