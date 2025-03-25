@@ -1,5 +1,9 @@
 # Stage 1: Base image
-FROM ghcr.io/dbt-labs/dbt-bigquery:1.8.2 AS build
+ARG VERSION=1.8.2
+FROM ghcr.io/dbt-labs/dbt-bigquery:$VERSION AS build
+
+# Install curl
+RUN apt-get update && apt-get install -y curl
 
 # Set environment variable
 ENV DBT_PROFILES_DIR=/root/.dbt \
@@ -11,7 +15,6 @@ WORKDIR ${DBT_PROJECT_DIR}
 
 # Copy necessary files
 COPY /config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
-COPY /config/bq-keyfile.json ${DBT_PROFILES_DIR}/bq-keyfile.json
 
 # Copy project structure
 COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml

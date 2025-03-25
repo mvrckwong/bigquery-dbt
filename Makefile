@@ -1,6 +1,3 @@
-# Load .env variables for all targets
-ENV_FILE = .env
-
 install_init_reqs:
 	pip install uv
 

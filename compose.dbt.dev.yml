@@ -16,21 +16,37 @@ x-common-config:
       mode: 0444
 
 services:
-  debug:
+  debug: # Check if it can connect to the datawarehouse, etc.
     <<: *dbt-common-config
     command: ["debug"]
-  run:
+    depends_on:
+      ui:
+        condition: service_healthy
+
+  run: # Check if can run the following models, seeds, etc.
     <<: *dbt-common-config
     profiles:
       - run
     command: ["run"]
-  ui:
+    depends_on:
+      ui:
+        condition: service_healthy
+      debug:
+        condition: service_completed_successfully
+
+  ui: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
     command: -c "dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 secrets:
   keyfile_secret:
