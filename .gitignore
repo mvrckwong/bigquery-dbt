@@ -1,4 +1,5 @@
 *.lock
+bq-keyfile.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

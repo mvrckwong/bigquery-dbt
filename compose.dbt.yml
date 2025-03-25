@@ -23,18 +23,13 @@ services:
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
   
-  # debug:
-  #   <<: *dbt-common-config
-  #   tty: true
-  #   entrypoint: /bin/sh
-  #   command: -c "dbt deps && dbt build"
+  debug:
+    <<: *dbt-common-config
+    tty: true
+    entrypoint: /bin/sh
+    command: -c "dbt deps && dbt debug"
   
   run:
     <<: *dbt-common-config
     command: ["run"]
     restart: no
-  
-  # test:
-  #   <<: *dbt-common-config
-  #   command: ["test"]
-  #   restart: no
