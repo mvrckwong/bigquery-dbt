@@ -16,11 +16,11 @@ x-common-config:
       mode: 0444
 
 services:
-  debug: # Check if it can connect to the datawarehouse, etc.
+  dbt-debug: # Check if it can connect to the datawarehouse, etc.
     <<: *dbt-common-config
     command: ["debug"]
     depends_on:
-      ui:
+      dbt-docs-server:
         condition: service_healthy
 
   run: # Check if can run the following models, seeds, etc.
@@ -29,12 +29,12 @@ services:
       - run
     command: ["run"]
     depends_on:
-      ui:
+      dbt-docs-server:
         condition: service_healthy
-      debug:
+      dbt-debug:
         condition: service_completed_successfully
 
-  ui: # Check the lineage, models, seeds, etc.
+  dbt-docs-server: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
