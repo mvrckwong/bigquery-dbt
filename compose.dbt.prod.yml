@@ -1,10 +1,10 @@
-name: dbt-instance-dev
+name: dbt-instance-prod
 
 x-common-config:
   &dbt-common-config
   build:
     context: .
-    dockerfile: Dockerfile-dev
+    dockerfile: Dockerfile.prod
   volumes:
     - ./seeds:${DBT_PROJECT_DIR}/seeds
     - ./logs:${DBT_PROJECT_DIR}/logs
@@ -47,6 +47,10 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+
+networks:
+  dbt-network:
+    driver: bridge
 
 secrets:
   keyfile_secret:
