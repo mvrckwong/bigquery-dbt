@@ -14,11 +14,18 @@ x-common-config:
     - source: keyfile_secret
       target: ${DBT_PROFILES_DIR}/bq-keyfile.json
       mode: 0444
+  networks:
+    - dbt-network
 
 services:
   dbt-debug: # Check if it can connect to the datawarehouse, etc.
     <<: *dbt-common-config
     command: ["debug"]
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
     depends_on:
       dbt-docs-server:
         condition: service_healthy
@@ -47,6 +54,11 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
 
 networks:
   dbt-network:
