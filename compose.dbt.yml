@@ -10,7 +10,7 @@ x-common-config:
   volumes:
     - ./dbt_project.yml:/usr/app/dbt_project.yml
     - ./dbt:/usr/app/dbt
-    - ./data:/usr/app/data
+    - ./seeds:/usr/app/seeds
   env_file:
     - .env
 
@@ -28,8 +28,3 @@ services:
     tty: true
     entrypoint: /bin/sh
     command: -c "dbt deps && dbt debug"
-  
-  run:
-    <<: *dbt-common-config
-    command: ["run"]
-    restart: no
