@@ -2,7 +2,7 @@
 # Name your project! Project names should contain only lowercase characters
 # and underscores. A good package name should reflect your organization's
 # name or the intended use of these models
-name: 'bigquery'
+name: 'bigquery_general'
 version: '1.0.0'
 config-version: 2
 
@@ -24,7 +24,6 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
-
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -35,16 +34,39 @@ clean-targets:         # directories to be removed by `dbt clean`
 # continue to be built as views. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
 
-
 models:
-  bigquery-general:
+  bigquery_general:
     +materialized: table  # Default materialization for all models
     bronze:
-      +schema: bronze    # Use schema instead of database for BigQuery
-      +tags: ["raw", "intermediate"]
+      +materialized: view
+      +schema: bronze
+      +persist_docs:
+        relation: true
+        columns: false
+      +tags: ["raw", "bronze"]
+      +labels:
+        data_layer: bronze
     silver:
+      +materialized: incremental
       +schema: silver
-      +tags: ["stg", "staging"]
+      +persist_docs:
+        relation: true
+        columns: true
+      +tags: ["stg", "silver"]
+      +labels:
+        data_layer: silver
     gold:
-      +schema: prod
-      +tags: ["prod", "production"]
+      +materialized: incremental
+      +schema: gold
+      +persist_docs:
+        relation: true
+        columns: true
+      +tags: ["prod", "gold"]
+      +labels:
+        data_layer: gold
+
+snapshots:
+  bigquery_general:
+    +schema: silver
+    +target_schema: silver
+    +enabled: true

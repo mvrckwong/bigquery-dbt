@@ -1,55 +1,40 @@
+# IMPORTANT: For testing dbt before moving to docker compose airflow with dbt
+# Check the configuration path.
+
 name: dbt-instance
 x-common-config:
   &dbt-common-config
-  image: ghcr.io/dbt-labs/dbt-bigquery:1.8.2
-  entrypoint: ["dbt"]
+  build: 
+    context: .
+    dockerfile: Dockerfile
   volumes:
-    - .:/usr/app
-    - type: volume
-      source: dbt_config
-      target: /root/.dbt
-      read_only: true
-  networks:
-    - data_network
-  env_file: 
+    - ./dbt_project.yml:/usr/app/dbt_project.yml
+    - ./dbt:/usr/app/dbt
+    - ./data:/usr/app/data
+  env_file:
     - .env
 
 services:
-  run:
-    <<: *dbt-common-config
-    tty: true
-    restart: no
-    command:
-      ["run"]
-
-  test:
-    <<: *dbt-common-config
-    tty: true
-    restart: no
-    command:
-      ["test"]
-
   ui:
     <<: *dbt-common-config
     tty: true
-    command:
-      ["docs", "serve", "--port", "8080", "--host", "0.0.0.0"]
+    entrypoint: /bin/sh
+    command: -c "dbt deps && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
-    
-volumes:
-  dbt_config:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: '~/.dbt'
-
-networks:
-  data_network:
-    driver: bridge
-
-# How to run the commands externally.
-# docker-compose exec dbt dbt run
-# docker-compose exec dbt dbt test
-# docker-compose exec dbt dbt docs generate
+  
+  # debug:
+  #   <<: *dbt-common-config
+  #   tty: true
+  #   entrypoint: /bin/sh
+  #   command: -c "dbt deps && dbt build"
+  
+  run:
+    <<: *dbt-common-config
+    command: ["run"]
+    restart: no
+  
+  # test:
+  #   <<: *dbt-common-config
+  #   command: ["test"]
+  #   restart: no

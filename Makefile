@@ -1,8 +1,11 @@
+# Load .env variables for all targets
+ENV_FILE = .env
+
 install_init_reqs:
 	pip install uv
 
 run_dbt:
-	uv run dbt run
+	uv run dbt run --profiles-dir=./config
 
 run_dbt_docs:
 	uv run dbt docs generate
