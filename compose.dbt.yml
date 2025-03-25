@@ -27,21 +27,12 @@ services:
     command: -c "dbt deps && dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
-    # healthcheck:
-    #   test: ["CMD", "curl", "-f", "http://localhost:8080"]
-    #   interval: 30s
-    #   timeout: 10s
-    #   retries: 3
-    #   start_period: 40s
   
   debug:
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
     command: -c "dbt deps && dbt debug"
-    # depends_on:
-    #   ui:
-    #     condition: service_healthy
 
   build:
     <<: *dbt-common-config
@@ -49,12 +40,10 @@ services:
       - build
     command: ["build"]
 
-  wait:
-    <<: *dbt-common-config
-    tty: true
-    entrypoint: /bin/sh
-    command: ["tail", "-f", "/dev/null"]
-
 networks:
   data_network:
     external: true
+
+secrets:
+  bq_service_account_key:
+    file: ./config/bq-keyfile.json
