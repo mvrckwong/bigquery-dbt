@@ -1,30 +1,37 @@
 name: dbt-instance-dev
+
 x-common-config:
   &dbt-common-config
-  build: 
+  build:
     context: .
     dockerfile: Dockerfile-dev
   volumes:
-    - ./seeds:/usr/app/seeds
-    - ./logs:/usr/app/logs
+    - ./seeds:${DBT_PROJECT_DIR}/seeds
+    - ./logs:${DBT_PROJECT_DIR}/logs
   env_file:
     - .env
+  secrets:
+    - source: keyfile_secret
+      target: ${DBT_PROFILES_DIR}/bq-keyfile.json
+      mode: 0444
 
 services:
-  debug: # Check if its connecting to profiles.yml and to datawarehouse
+  debug:
     <<: *dbt-common-config
     command: ["debug"]
-
-  run: # Check if it can run the following models, snapshots, etc.
+  run:
     <<: *dbt-common-config
     profiles:
       - run
     command: ["run"]
-
-  ui: # Check for the following lineage
+  ui:
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
     command: -c "dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
     ports:
       - "${PORT_DBT_UI:-8888}:8080"
+
+secrets:
+  keyfile_secret:
+    file: ./config/bq-keyfile.json
