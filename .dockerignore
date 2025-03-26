@@ -4,6 +4,8 @@ package-lock.yml
 .git
 .gitignore
 *.md
+target/
+dbt_packages/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,4 +1,24 @@
+# Stage 1: Builder - Install dependencies
 ARG DBT_VERSION=1.8.2
+FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION as builder
+
+# Set environment variable
+ENV BUILD_DIR=/build
+
+# Set working directory
+WORKDIR ${BUILD_DIR}
+
+# Copy necessary files
+COPY ./packages.yml ${BUILD_DIR}/packages.yml
+COPY ./dbt_project.yml ${BUILD_DIR}/dbt_project.yml
+
+# Run dbt deps
+RUN ["dbt", "deps"]
+
+# Check if dbt_packages exists
+RUN [ -d "dbt_packages" ] || (echo "dbt_packages directory not found" && exit 1)
+
+# Stage 2: Final image
 FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION
 
 # Install essential tools and security updates
@@ -9,29 +29,31 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     && rm -rf /tmp/* /var/tmp/*
-    
+
 # Set environment variable
 ENV DBT_PROFILES_DIR=/root/.dbt \
-	DBT_PROJECT_DIR=/usr/app \
-	ENVIRONMENT=prod
+    DBT_PROJECT_DIR=/usr/app \
+    ENVIRONMENT=prod
 
 # Set working directory
 WORKDIR ${DBT_PROJECT_DIR}
 
-# Copy necessary files
+# Copy profiles configuration
 COPY ./config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
+
+# Copy dependencies from builder
+COPY --from=builder /build/dbt_packages ${DBT_PROJECT_DIR}/dbt_packages
+
+# Copy project configuration files
 COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml
 COPY ./packages.yml ${DBT_PROJECT_DIR}/packages.yml
 
-# Install dependencies
-RUN ["dbt", "deps"]
-
-# Copy project files
-COPY ./analyses ${DBT_PROJECT_DIR}/analyses
+# Copy project files (ordered by likelihood of changes)
 COPY ./macros ${DBT_PROJECT_DIR}/macros
-COPY ./models ${DBT_PROJECT_DIR}/models
-COPY ./snapshots ${DBT_PROJECT_DIR}/snapshots
 COPY ./tests ${DBT_PROJECT_DIR}/tests
+COPY ./snapshots ${DBT_PROJECT_DIR}/snapshots
+COPY ./analyses ${DBT_PROJECT_DIR}/analyses
+COPY ./models ${DBT_PROJECT_DIR}/models
 
 # Entry point for the application
-ENTRYPOINT [ "dbt" ]
+ENTRYPOINT ["dbt"]
