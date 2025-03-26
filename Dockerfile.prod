@@ -1,5 +1,5 @@
 ARG DBT_VERSION=1.8.2
-FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION AS base
+FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION
 
 # Install essential tools and security updates
 RUN apt-get update && \
@@ -19,7 +19,7 @@ ENV DBT_PROFILES_DIR=/root/.dbt \
 WORKDIR ${DBT_PROJECT_DIR}
 
 # Copy necessary files
-COPY /config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
+COPY ./config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
 COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml
 COPY ./packages.yml ${DBT_PROJECT_DIR}/packages.yml
 
