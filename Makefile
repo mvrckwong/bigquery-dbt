@@ -3,7 +3,7 @@ install_init_reqs:
 
 run_prod_compose:
 	docker compose -f 'compose.dbt.prod.yml' down
-	docker compose -f 'compose.dbt.prod.yml' --profile run up -d --build
+	docker compose -f 'compose.dbt.prod.yml' --profile build up -d --build
 
 run_dev_compose:
 	docker compose -f 'compose.dbt.yml' down

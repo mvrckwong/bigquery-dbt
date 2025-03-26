@@ -33,7 +33,7 @@ services:
   build: # Check if can run the following models, seeds, etc.
     <<: *dbt-common-config
     profiles:
-      - run
+      - build
     command: ["build"]
     depends_on:
       dbt-docs-server:
