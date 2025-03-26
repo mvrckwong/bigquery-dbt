@@ -30,11 +30,11 @@ services:
       dbt-docs-server:
         condition: service_healthy
 
-  run: # Check if can run the following models, seeds, etc.
+  build: # Check if can run the following models, seeds, etc.
     <<: *dbt-common-config
     profiles:
       - run
-    command: ["run"]
+    command: ["build"]
     depends_on:
       dbt-docs-server:
         condition: service_healthy

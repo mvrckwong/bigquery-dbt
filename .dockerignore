@@ -1,5 +1,9 @@
 package-lock.yml
 *.lock
+.DS_Store
+.git
+.gitignore
+*.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

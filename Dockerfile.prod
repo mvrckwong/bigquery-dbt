@@ -1,10 +1,16 @@
 # Stage 1: Base image
-ARG VERSION=1.8.2
-FROM ghcr.io/dbt-labs/dbt-bigquery:$VERSION AS build
+ARG DBT_VERSION=1.8.2
+FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION AS base
 
-# Install curl
-RUN apt-get update && apt-get install -y curl
-
+# Install essential tools and security updates
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /tmp/* /var/tmp/*
+    
 # Set environment variable
 ENV DBT_PROFILES_DIR=/root/.dbt \
 	DBT_PROJECT_DIR=/usr/app \
@@ -15,10 +21,11 @@ WORKDIR ${DBT_PROJECT_DIR}
 
 # Copy necessary files
 COPY /config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
-
-# Copy project structure
 COPY ./dbt_project.yml ${DBT_PROJECT_DIR}/dbt_project.yml
 COPY ./packages.yml ${DBT_PROJECT_DIR}/packages.yml
+
+# Install dependencies
+RUN ["dbt", "deps"]
 
 # Copy project files
 COPY ./analyses ${DBT_PROJECT_DIR}/analyses
@@ -26,9 +33,6 @@ COPY ./macros ${DBT_PROJECT_DIR}/macros
 COPY ./models ${DBT_PROJECT_DIR}/models
 COPY ./snapshots ${DBT_PROJECT_DIR}/snapshots
 COPY ./tests ${DBT_PROJECT_DIR}/tests
-
-# Install dependencies
-RUN ["dbt", "deps"]
 
 # Entry point for the application
 ENTRYPOINT [ "dbt" ]
