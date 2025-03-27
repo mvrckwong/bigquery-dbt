@@ -24,6 +24,11 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+vars:
+  "current_timestamp": "CURRENT_TIMESTAMP()"
+  "timezone": "UTC"
+
+
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
 
@@ -37,6 +42,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   bigquery_general:
     +materialized: table  # Default materialization for all models
+
     bronze:
       +materialized: view
       +schema: bronze
@@ -46,6 +52,7 @@ models:
       +tags: ["raw", "bronze"]
       +labels:
         data_layer: bronze
+
     silver:
       +materialized: incremental
       +schema: silver
@@ -55,6 +62,7 @@ models:
       +tags: ["stg", "silver"]
       +labels:
         data_layer: silver
+
     gold:
       +materialized: incremental
       +schema: gold
@@ -64,6 +72,7 @@ models:
       +tags: ["prod", "gold"]
       +labels:
         data_layer: gold
+  
     marts:
       +materialized: incremental
       +schema: gold
@@ -73,6 +82,7 @@ models:
       +tags: ["prod", "marts"]
       +labels:
         data_layer: marts
+
       
 snapshots:
   bigquery_general:
@@ -82,5 +92,8 @@ snapshots:
 
 seeds:
   bigquery_general:
+    +schema: bronze
+    +materialized: view
+
     eg-adworks:
       +enabled: true
