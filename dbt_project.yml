@@ -74,9 +74,13 @@ models:
       +labels:
         data_layer: marts
       
+snapshots:
+  bigquery_general:
+    +schema: silver
+    +target_schema: silver
+    +enabled: true
 
-# snapshots:
-#   bigquery_general:
-#     +schema: silver
-#     +target_schema: silver
-#     +enabled: true
+seeds:
+  bigquery_general:
+    eg-adworks:
+      +enabled: true
