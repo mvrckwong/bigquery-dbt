@@ -1,6 +1,7 @@
 package-lock.yml
 *.lock
 bq-keyfile.json
+/seeds
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
