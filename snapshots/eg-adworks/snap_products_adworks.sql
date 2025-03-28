@@ -2,21 +2,21 @@
 
 {{
     config(
-        unique_key='ProductKey',
+        unique_key='product_key',
         strategy='check',
         check_cols=[
-            'ProductName',
-            'ModelName',
-            'ProductDescription',
-            'ProductColor',
-            'ProductSize',
-            'ProductStyle',
-            'ProductCost',
-            'ProductPrice'
+            'product_name',
+            'product_sku',
+            'model_name',
+            'product_description',
+            'product_color',
+            'product_size',
+            'product_style',
+            'product_cost',
+            'product_price'
         ],
         invalidate_hard_deletes=True,
-        tags=['eg'],
-        enabled=false
+        tags=['gold', 'product']
     )
 }}
 

@@ -93,7 +93,6 @@ snapshots:
 seeds:
   bigquery_general:
     +schema: bronze
-    +materialized: view
 
     eg-adworks:
       +enabled: true
