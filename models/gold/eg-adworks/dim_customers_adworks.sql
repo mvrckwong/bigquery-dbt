@@ -5,14 +5,13 @@
         unique_key='customer_key',
         on_schema_change='sync_all_columns',
         partition_by={
-            "field": "_valid_from"
-            , "data_type": "timestamp"
-            , "granularity": "day"
+            "field": "_valid_from",
+            "data_type": "timestamp",
+            "granularity": "day"
         },
         cluster_by=[
             'last_name',
-            'income_tier_sort',
-            'education_level_sort'
+            'income_tier_sort'
         ],
         tags=['dimension', 'customer']
     )
@@ -70,32 +69,6 @@ enriched AS (
         , TRIM(CONCAT(COALESCE(s.prefix, ''), ' ', s.first_name, ' ', s.last_name)) AS full_name
         , TRIM(CONCAT(s.first_name, ' ', s.last_name)) AS display_name
         
-        -- Enriched marital status
-        , CASE 
-            WHEN UPPER(s.marital_status) = 'M' THEN 'Married'
-            WHEN UPPER(s.marital_status) = 'S' THEN 'Single'
-            ELSE COALESCE(s.marital_status, 'Unknown')
-          END AS marital_status_desc
-        , CASE 
-            WHEN UPPER(s.marital_status) = 'M' THEN 1
-            WHEN UPPER(s.marital_status) = 'S' THEN 2
-            ELSE 99
-          END AS marital_status_sort
-        
-        -- Enriched gender
-        , CASE 
-            WHEN UPPER(s.gender) = 'M' THEN 'Male'
-            WHEN UPPER(s.gender) = 'F' THEN 'Female'
-            WHEN UPPER(s.gender) = 'NA' THEN 'Not Available'
-            ELSE COALESCE(s.gender, 'Unknown')
-          END AS gender_desc
-        , CASE 
-            WHEN UPPER(s.gender) = 'M' THEN 1
-            WHEN UPPER(s.gender) = 'F' THEN 2
-            WHEN UPPER(s.gender) = 'NA' THEN 3
-            ELSE 99
-          END AS gender_sort
-        
         -- Email domain extraction
         , CASE
             WHEN s.email_address LIKE '%@%' 
@@ -118,65 +91,7 @@ enriched AS (
             WHEN s.annual_income >= 120000 THEN 4
             ELSE 99
           END AS income_tier_sort
-        
-        -- Children categorization
-        , CASE
-            WHEN s.total_children = 0 THEN 'No Children'
-            WHEN s.total_children = 1 THEN '1 Child'
-            WHEN s.total_children = 2 THEN '2 Children'
-            WHEN s.total_children = 3 THEN '3 Children'
-            WHEN s.total_children >= 4 THEN '4+ Children'
-            ELSE 'Unknown'
-          END AS children_group
-        , CASE
-            WHEN s.total_children = 0 THEN 1
-            WHEN s.total_children = 1 THEN 2
-            WHEN s.total_children = 2 THEN 3
-            WHEN s.total_children = 3 THEN 4
-            WHEN s.total_children >= 4 THEN 5
-            ELSE 99
-          END AS children_group_sort
-        
-        -- Education level enrichment
-        , CASE
-            WHEN s.education_level = 'Bachelors' THEN 'Bachelors Degree'
-            WHEN s.education_level = 'High School' THEN 'High School Diploma'
-            WHEN s.education_level = 'Partial College' THEN 'Some College'
-            WHEN s.education_level = 'Graduate Degree' THEN 'Graduate Degree'
-            WHEN s.education_level = 'Partial High School' THEN 'Some High School'
-            ELSE COALESCE(s.education_level, 'Unknown')
-          END AS education_level_desc
-        , CASE
-            WHEN s.education_level = 'Partial High School' THEN 1
-            WHEN s.education_level = 'High School' THEN 2
-            WHEN s.education_level = 'Partial College' THEN 3
-            WHEN s.education_level = 'Bachelors' THEN 4
-            WHEN s.education_level = 'Graduate Degree' THEN 5
-            ELSE 99
-          END AS education_level_sort
-        
-        -- Occupation categorization
-        , CASE
-            WHEN s.occupation = 'Clerical' THEN 'Clerical/Administrative'
-            WHEN s.occupation = 'Management' THEN 'Management/Executive'
-            WHEN s.occupation = 'Manual' THEN 'Manual Labor'
-            WHEN s.occupation = 'Professional' THEN 'Professional'
-            WHEN s.occupation = 'Skilled Manual' THEN 'Skilled Technical'
-            ELSE COALESCE(s.occupation, 'Unknown')
-          END AS occupation_desc
-        , CASE
-            WHEN s.occupation = 'Manual' THEN 1
-            WHEN s.occupation = 'Clerical' THEN 2
-            WHEN s.occupation = 'Skilled Manual' THEN 3
-            WHEN s.occupation = 'Professional' THEN 4
-            WHEN s.occupation = 'Management' THEN 5
-            ELSE 99
-          END AS occupation_sort
-        
-        -- Date parts for birthday analysis
-        , EXTRACT(MONTH FROM s.birth_date) AS birth_month
-        , EXTRACT(DAY FROM s.birth_date) AS birth_day
-        
+
         -- SCD metadata - date components
         , EXTRACT(YEAR FROM s.dbt_valid_from) AS _valid_year
         , EXTRACT(MONTH FROM s.dbt_valid_from) AS _valid_month
@@ -199,31 +114,19 @@ final AS (
         , e.display_name
         , e.full_name
         , e.birth_date
-        , e.birth_month
-        , e.birth_day
         , e.age
         , e.age_group
         , e.age_group_sort
         , e.marital_status
-        , e.marital_status_desc
-        , e.marital_status_sort
         , e.gender
-        , e.gender_desc
-        , e.gender_sort
         , e.email_address
         , e.email_domain
         , e.annual_income
         , e.income_tier
         , e.income_tier_sort
         , e.total_children
-        , e.children_group
-        , e.children_group_sort
         , e.education_level
-        , e.education_level_desc
-        , e.education_level_sort
         , e.occupation
-        , e.occupation_desc
-        , e.occupation_sort
         , e.is_home_owner
         
         -- Customer segmentation (derived from multiple attributes)

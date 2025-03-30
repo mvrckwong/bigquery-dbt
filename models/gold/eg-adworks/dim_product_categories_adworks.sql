@@ -60,10 +60,6 @@ enriched AS (
             WHEN LOWER(s.category_name) IN ('bikes', 'components') THEN 'Core Products'
             ELSE 'Supporting Products'
           END AS product_classification
-        , CASE
-            WHEN LOWER(s.category_name) IN ('bikes', 'components') THEN 1
-            ELSE 2
-          END AS product_classification_sort
     FROM 
         source s
 ),
@@ -83,7 +79,6 @@ final AS (
         , e.category_group
         , e.category_group_sort
         , e.product_classification
-        , e.product_classification_sort
         
         -- SCD metadata
         , e.dbt_valid_from AS _valid_from

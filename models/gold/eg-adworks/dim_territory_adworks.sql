@@ -55,20 +55,12 @@ enriched AS (
             WHEN s.region IN ('Northwest', 'Northeast', 'Central') THEN 'Core'
             ELSE 'Expansion'
           END AS territory_category
-        , CASE 
-            WHEN s.region IN ('Northwest', 'Northeast', 'Central') THEN 1
-            ELSE 2
-          END AS territory_category_sort
         
         -- Domestic vs international
         , CASE
             WHEN s.country = 'United States' THEN 'Domestic'
             ELSE 'International'
           END AS market_type
-        , CASE
-            WHEN s.country = 'United States' THEN 1
-            ELSE 2
-          END AS market_type_sort
         
         -- Domestic region sorting
         , CASE
@@ -97,9 +89,7 @@ final AS (
         -- Enriched attributes
         , e.continent_code
         , e.territory_category
-        , e.territory_category_sort
         , e.market_type
-        , e.market_type_sort
         , e.region_sort
         
         -- Indicators
