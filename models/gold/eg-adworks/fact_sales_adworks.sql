@@ -4,9 +4,9 @@
         incremental_strategy='merge',
         unique_key='sale_key',
         partition_by={
-            "field": "order_date"
-            , "data_type": "date"
-            , "granularity": "day"
+            "field": "order_date",
+            "data_type": "date",
+            "granularity": "day"
         },
         cluster_by=[
             'product_key',
@@ -14,7 +14,7 @@
             'territory_key'
         ],
         on_schema_change='sync_all_columns',
-        tags=['gold', 'sales_fact']
+        tags=['fact', 'adworks']
     )
 }}
 

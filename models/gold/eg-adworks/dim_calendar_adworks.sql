@@ -3,16 +3,16 @@
         materialized='table',
         unique_key='calendar_key',
         partition_by={
-            "field": "calendar_date"
-            , "data_type": "date"
-            , "granularity": "month"
+            "field": "calendar_date",
+            "data_type": "date",
+            "granularity": "month"
         },
         cluster_by=[
             'calendar_year',
             'calendar_month',
             'day_of_week'
         ],
-        tags=['dimension', 'calendar']
+        tags=['dimension', 'adworks']
     )
 }}
 

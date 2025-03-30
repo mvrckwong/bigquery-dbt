@@ -4,9 +4,9 @@
         incremental_strategy='merge',
         unique_key='return_key',
         partition_by={
-            "field": "return_date"
-            , "data_type": "date"
-            , "granularity": "day"
+            "field": "return_date",
+            "data_type": "date",
+            "granularity": "day"
         },
         cluster_by=[
             'product_key',
@@ -14,7 +14,7 @@
             'return_quantity'
         ],
         on_schema_change='sync_all_columns',
-        tags=['gold', 'returns_fact']
+        tags=['fact', 'adworks']
     )
 }}
 
@@ -58,33 +58,6 @@ transformed_data AS (
 metrics AS (
     SELECT
         t.*
-        
-        -- Business metrics calculations
-        , EXTRACT(YEAR FROM t.return_date) AS return_year
-        , EXTRACT(MONTH FROM t.return_date) AS return_month
-        , EXTRACT(DAY FROM t.return_date) AS return_day
-        , CASE
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) IN (1, 7) THEN 'Weekend'
-            ELSE 'Weekday'
-          END AS day_type
-        , CASE
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 1 THEN 'Sunday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 2 THEN 'Monday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 3 THEN 'Tuesday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 4 THEN 'Wednesday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 5 THEN 'Thursday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 6 THEN 'Friday'
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 7 THEN 'Saturday'
-          END AS day_name
-        , CASE
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 1 THEN 7
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 2 THEN 1
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 3 THEN 2
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 4 THEN 3
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 5 THEN 4
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 6 THEN 5
-            WHEN EXTRACT(DAYOFWEEK FROM t.return_date) = 7 THEN 6
-          END AS day_name_sort
     FROM 
         transformed_data t
 )

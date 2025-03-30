@@ -5,16 +5,16 @@
         unique_key='territory_key',
         on_schema_change='sync_all_columns',
         partition_by={
-            "field": "_valid_from"
-            , "data_type": "timestamp"
-            , "granularity": "day"
+            "field": "_valid_from",
+            "data_type": "timestamp",
+            "granularity": "day"
         },
         cluster_by=[
             'region',
             'country',
             'continent'
         ],
-        tags=['dimension', 'territory']
+        tags=['dimension', 'adworks']
     )
 }}
 

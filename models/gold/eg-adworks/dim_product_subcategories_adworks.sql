@@ -5,16 +5,16 @@
         unique_key='product_subcategory_key',
         on_schema_change='sync_all_columns',
         partition_by={
-            "field": "_valid_from"
-            , "data_type": "timestamp"
-            , "granularity": "day"
+            "field": "_valid_from",
+            "data_type": "timestamp",
+            "granularity": "day"
         },
         cluster_by=[
             'subcategory_name',
             'product_category_key',
             'subcategory_type'
         ],
-        tags=['dimension']
+        tags=['dimension', 'adworks']
     )
 }}
 
