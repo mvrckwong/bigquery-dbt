@@ -4,7 +4,7 @@ models:
   - name: dim_territory_adworks
     description: "Gold layer dimension table for sales territories"
     config:
-      tags: ['dimension', 'territory']
+      tags: ['dimension', 'adworks']
     
     columns:
       - name: territory_key
