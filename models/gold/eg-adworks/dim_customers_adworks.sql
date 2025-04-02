@@ -13,7 +13,10 @@
             'last_name',
             'income_tier_sort'
         ],
-        tags=['dimension', 'adworks']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

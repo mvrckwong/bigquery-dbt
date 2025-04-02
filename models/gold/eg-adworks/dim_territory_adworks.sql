@@ -14,7 +14,10 @@
             'country',
             'continent'
         ],
-        tags=['dimension', 'adworks']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

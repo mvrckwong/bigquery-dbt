@@ -14,7 +14,10 @@
             'category_name',
             '_is_current'
         ],
-        tags=['dimension', 'adworks']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

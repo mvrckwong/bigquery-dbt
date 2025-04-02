@@ -9,7 +9,10 @@
             '_extracted_at'
         ],
         on_schema_change='sync_all_columns',
-        tags=['silver', 'product_category']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

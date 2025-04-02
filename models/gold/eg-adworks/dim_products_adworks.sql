@@ -14,7 +14,10 @@
             'product_color',
             'product_sku'
         ],
-        tags=['dimension', 'adworks']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

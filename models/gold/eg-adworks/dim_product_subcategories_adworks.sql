@@ -14,7 +14,10 @@
             'product_category_key',
             'subcategory_type'
         ],
-        tags=['dimension', 'adworks']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 

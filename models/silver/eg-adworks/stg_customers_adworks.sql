@@ -9,7 +9,10 @@
             'email_address'
         ],
         on_schema_change='sync_all_columns',
-        tags=['silver', 'customer']
+        tags=[
+            'adworks',
+            'dimension'
+        ]
     )
 }}
 
