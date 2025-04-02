@@ -92,6 +92,12 @@ models:
       +labels:
         data_layer: marts
 
+    common:
+      +schema: gold
+
+    eg-adworks:
+      +tags: ['adworks']
+
       
 snapshots:
   bigquery_general:
@@ -102,6 +108,5 @@ snapshots:
 seeds:
   bigquery_general:
     +schema: bronze
-
     eg-adworks:
       +enabled: true
