@@ -20,7 +20,9 @@ WITH date_range AS (
     FROM UNNEST(GENERATE_DATE_ARRAY(
         {% if is_incremental() %}
             -- If incremental, only generate dates we don't have yet
-            CAST((SELECT DATE_ADD(MAX(calendar_date), INTERVAL 1 DAY) FROM {{ this }}) AS DATE)
+            CAST(
+                (SELECT DATE_ADD(MAX(calendar_date), INTERVAL 1 DAY) FROM {{ this }}) AS DATE
+            )
         {% else %}
             -- Initial load starts from 2000
             {{ start_date }}
