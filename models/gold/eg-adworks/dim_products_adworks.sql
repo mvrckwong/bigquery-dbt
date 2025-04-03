@@ -14,14 +14,10 @@
             'product_color',
             'product_sku'
         ],
-<<<<<<< HEAD
-        tags=['dimension', 'adworks']
-=======
         tags=[
             'adworks',
             'dimension'
         ]
->>>>>>> dev
     )
 }}
 

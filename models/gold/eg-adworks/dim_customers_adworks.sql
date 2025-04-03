@@ -13,14 +13,10 @@
             'last_name',
             'income_tier_sort'
         ],
-<<<<<<< HEAD
-        tags=['dimension', 'adworks']
-=======
         tags=[
             'adworks',
             'dimension'
         ]
->>>>>>> dev
     )
 }}
 

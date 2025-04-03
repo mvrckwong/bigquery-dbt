@@ -25,10 +25,6 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "dbt_packages"
 
 vars:
-<<<<<<< HEAD
-  "current_timestamp": "CURRENT_TIMESTAMP()"
-  "timezone": "UTC"
-=======
   # Remove the nested structure if it only contains time_zone
   # dbt_date:
   #   time_zone: "UTC"
@@ -40,7 +36,6 @@ vars:
   # Keep other vars as they are
   current_timestamp: "CURRENT_TIMESTAMP()"
   timezone: "UTC" # This seems redundant if you use dbt_date:time_zone, check if needed
->>>>>>> dev
 
 
 # Configuring models
@@ -97,15 +92,6 @@ models:
       +labels:
         data_layer: marts
 
-<<<<<<< HEAD
-=======
-    common:
-      +schema: gold
-
-    eg-adworks:
-      +tags: ['adworks']
-
->>>>>>> dev
       
 snapshots:
   bigquery_general:
@@ -116,9 +102,5 @@ snapshots:
 seeds:
   bigquery_general:
     +schema: bronze
-<<<<<<< HEAD
-
-=======
->>>>>>> dev
     eg-adworks:
       +enabled: true

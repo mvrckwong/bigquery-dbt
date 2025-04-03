@@ -14,14 +14,10 @@
             'category_name',
             '_is_current'
         ],
-<<<<<<< HEAD
-        tags=['dimension', 'adworks']
-=======
         tags=[
             'adworks',
             'dimension'
         ]
->>>>>>> dev
     )
 }}
 

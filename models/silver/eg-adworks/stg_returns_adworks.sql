@@ -13,14 +13,10 @@
             'product_key'
         ],
         on_schema_change='sync_all_columns',
-<<<<<<< HEAD
-        tags=['silver', 'returns']
-=======
         tags=[
             'adworks',
             'fact'
         ]
->>>>>>> dev
     )
 }}
 
