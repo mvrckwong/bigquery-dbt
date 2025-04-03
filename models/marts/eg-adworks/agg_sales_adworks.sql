@@ -104,29 +104,3 @@ SELECT
 	extended_fulfillment_percentage AS attribute 
 FROM 
 	agg_stats
-UNION ALL
-
-
-SELECT 
-	'unique_customers' AS name, 
-	unique_customers AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'avg_orders_per_customer' AS name, 
-	avg_orders_per_customer AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'unique_products' AS name, 
-	unique_products AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'unique_territories' AS name, 
-	unique_territories AS attribute 
-FROM 
-	agg_stats
