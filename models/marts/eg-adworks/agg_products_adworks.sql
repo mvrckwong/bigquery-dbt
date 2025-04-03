@@ -31,55 +31,6 @@ WITH agg_stats AS (
 )
 
 SELECT
-	'count_products' AS name, 
-	count_products AS attribute
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'count_brands' AS name, 
-	count_brands AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'count_colors' AS name, 
-	count_colors AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT
-	'avg_product_price' AS name, 
-	avg_product_price AS attribute
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'min_product_price' AS name, 
-	min_product_price AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'max_product_price' AS name, 
-	max_product_price AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT
-	'avg_product_margin' AS name, 
-	avg_product_margin AS attribute
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'avg_margin_percentage' AS name, 
-	avg_margin_percentage AS attribute 
-FROM 
-	agg_stats
-UNION ALL
-SELECT 
-	'count_low_margin_products' AS name, 
-	count_low_margin_products AS attribute 
-FROM 
+	*	
+FROM
 	agg_stats

@@ -8,7 +8,7 @@
 	)
 }}
 
-WITH return_metrics AS (
+WITH agg_stats AS (
 	SELECT
 		-- Metric 1: Total return count
 		count(return_date) AS total_return_count,
@@ -32,31 +32,6 @@ WITH return_metrics AS (
 )
 
 SELECT
-	'total_return_count' AS name, 
-	total_return_count AS attribute
-FROM 
-  	return_metrics
-UNION ALL
-SELECT 
-	'total_return_quantity' AS name, 
-	total_return_quantity AS attribute 
-FROM 
-  	return_metrics
-UNION ALL
-SELECT 
-	'avg_quantity_per_return' AS name, 
-	avg_quantity_per_return AS attribute 
-FROM 
-  	return_metrics
-UNION ALL
-SELECT 
-	'territory_return_count' AS name, 
-	territory_return_count AS attribute 
-FROM 
-  	return_metrics
-UNION ALL
-SELECT 
-	'product_return_count' AS name, 
-	product_return_count AS attribute 
-FROM 
-	return_metrics
+	*
+FROM
+	agg_stats
