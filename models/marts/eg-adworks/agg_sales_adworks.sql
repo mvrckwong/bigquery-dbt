@@ -29,16 +29,6 @@ WITH agg_stats AS (
 		COUNT(CASE WHEN fulfillment_category = 'Quick' THEN 1 END) / COUNT(*) * 100 AS quick_fulfillment_percentage,
 		COUNT(CASE WHEN fulfillment_category = 'Normal' THEN 1 END) / COUNT(*) * 100 AS normal_fulfillment_percentage,
 		COUNT(CASE WHEN fulfillment_category = 'Extended' THEN 1 END) / COUNT(*) * 100 AS extended_fulfillment_percentage,
-		
-		-- Customer metrics
-		COUNT(DISTINCT customer_key) AS unique_customers,
-		COUNT(DISTINCT order_number) / COUNT(DISTINCT customer_key) AS avg_orders_per_customer,
-		
-		-- Product metrics
-		COUNT(DISTINCT product_key) AS unique_products,
-		
-		-- Territory metrics
-		COUNT(DISTINCT territory_key) AS unique_territories
 	FROM 
 		{{ ref('fact_sales_adworks') }}
 )
@@ -115,6 +105,8 @@ SELECT
 FROM 
 	agg_stats
 UNION ALL
+
+
 SELECT 
 	'unique_customers' AS name, 
 	unique_customers AS attribute 
