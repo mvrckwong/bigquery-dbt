@@ -1,0 +1,58 @@
+version: 2
+
+models:
+  - name: dim_products_adworks
+    description: "Product dimension table with enriched attributes"
+    config:
+      tags: ['dimension', 'adworks']
+
+    columns:
+      - name: product_key
+        description: "Unique surrogate key for the product dimension"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_territory_adworks
+    description: "Gold layer dimension table for sales territories"
+    config:
+      tags: ['dimension', 'adworks']
+    
+    columns:
+      - name: territory_key
+        description: "Surrogate key for the territory dimension"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_calendar_adworks
+    description: "Calendar dimension table with date hierarchy and attributes"
+    config:
+      tags: ['dimension', 'adworks']
+    tests:
+      - dbt_utils.equal_rowcount:
+          compare_model: ref('stg_calendar_adworks')
+          
+    columns:
+      - name: calendar_key
+        description: "Surrogate key for the calendar dimension"
+        tests:
+          - unique
+          - not_null
+  
+  - name: fct_returns_adworks
+    description: "Fact table for product returns data"
+    config:
+      tags: ['fact', 'adworks']
+
+    columns:
+      - name: return_key
+        description: "Unique surrogate key for each return record"
+        tests:
+          - unique
+          - not_null
+
+      - name: return_date
+        description: "Date when the product was returned"
+        tests:
+          - not_null

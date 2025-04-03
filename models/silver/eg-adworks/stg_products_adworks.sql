@@ -9,7 +9,14 @@
             'product_sku'
         ],
         on_schema_change='sync_all_columns',
+<<<<<<< HEAD
         tags=['silver', 'product']
+=======
+        tags=[
+            'adworks',
+            'dimension'
+        ]
+>>>>>>> dev
     )
 }}
 

@@ -14,7 +14,14 @@
             'product_category_key',
             'subcategory_type'
         ],
+<<<<<<< HEAD
         tags=['dimension', 'adworks']
+=======
+        tags=[
+            'adworks',
+            'dimension'
+        ]
+>>>>>>> dev
     )
 }}
 

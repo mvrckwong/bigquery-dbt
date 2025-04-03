@@ -9,7 +9,14 @@
             'email_address'
         ],
         on_schema_change='sync_all_columns',
+<<<<<<< HEAD
         tags=['silver', 'customer']
+=======
+        tags=[
+            'adworks',
+            'dimension'
+        ]
+>>>>>>> dev
     )
 }}
 

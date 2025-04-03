@@ -14,7 +14,14 @@
             'country',
             'continent'
         ],
+<<<<<<< HEAD
         tags=['dimension', 'adworks']
+=======
+        tags=[
+            'adworks',
+            'dimension'
+        ]
+>>>>>>> dev
     )
 }}
 
