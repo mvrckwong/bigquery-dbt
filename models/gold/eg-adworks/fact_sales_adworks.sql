@@ -90,8 +90,7 @@ enriched AS (
             WHEN p.product_price IS NOT NULL AND p.product_cost IS NOT NULL AND p.product_price > 0
             THEN ROUND(
                 (s.order_quantity * (p.product_price - p.product_cost)) / 
-                (s.order_quantity * p.product_price) * 100, 
-                2)
+                (s.order_quantity * p.product_price) * 100, 2)
             ELSE 0
           END AS transaction_margin_pct
     FROM
