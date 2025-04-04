@@ -1,9 +1,7 @@
 {{
     config(
-        materialized='incremental',
-        incremental_strategy='merge',
-        unique_key='calendar_date',
-        on_schema_change='sync_all_columns',
+        materialized='table',
+        schema='gold',
         tags=[
             'general',
             'dimension'

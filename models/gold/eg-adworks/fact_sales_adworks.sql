@@ -126,8 +126,8 @@ final AS (
         , e.fulfillment_category
         , e.fulfillment_category_sort
         -- Revenue calculations
-        , e.product_price AS unit_price
-        , e.product_cost AS unit_cost
+        , e.product_price
+        , e.product_cost
         , e.revenue
         , e.total_cost
         , e.profit
