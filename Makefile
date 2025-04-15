@@ -1,6 +1,10 @@
 install_init_reqs:
 	pip install uv
 
+deploy_prod:
+	docker compose -f 'compose.dbt.prod.yml' down
+	docker compose -f 'compose.dbt.prod.yml' up -d --build
+
 run_prod_compose:
 	docker compose -f 'compose.dbt.prod.yml' down
 	docker compose -f 'compose.dbt.prod.yml' --profile build up -d --build
