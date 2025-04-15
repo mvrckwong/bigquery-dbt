@@ -18,7 +18,7 @@ x-common-config:
     - dbt-network
 
 services:
-  dbt-debug: # Check if it can connect to the datawarehouse, etc.
+  debug: # Check if it can connect to the datawarehouse, etc.
     <<: *dbt-common-config
     command: ["debug"]
     deploy:
@@ -27,21 +27,10 @@ services:
           cpus: '0.5'
           memory: 512M
     depends_on:
-      dbt-docs-server:
+      serve:
         condition: service_healthy
 
-  build: # Check if can run the following models, seeds, etc.
-    <<: *dbt-common-config
-    profiles:
-      - build
-    command: ["build"]
-    depends_on:
-      dbt-docs-server:
-        condition: service_healthy
-      dbt-debug:
-        condition: service_completed_successfully
-
-  dbt-docs-server: # Check the lineage, models, seeds, etc.
+  serve: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
     tty: true
     entrypoint: /bin/sh
@@ -59,6 +48,16 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+  build: # Check if can run the following models, seeds, etc. (OPTIONAL)
+    <<: *dbt-common-config
+    profiles:
+      - build
+    command: ["build"]
+    depends_on:
+      serve:
+        condition: service_healthy
+      debug:
+        condition: service_completed_successfully
 
 networks:
   dbt-network:
