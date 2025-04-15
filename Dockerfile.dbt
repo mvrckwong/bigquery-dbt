@@ -1,6 +1,6 @@
 # Stage 1: Builder - Install dependencies
 ARG DBT_VERSION=1.8.2
-FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION as builder
+FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION AS builder
 
 # Set environment variable
 ENV BUILD_DIR=/build
@@ -57,3 +57,6 @@ COPY ./models ${DBT_PROJECT_DIR}/models
 
 # Entry point for the application
 ENTRYPOINT ["dbt"]
+
+# Provide a default command (Optional, useful for running container without args)
+CMD ["--help"]

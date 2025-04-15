@@ -4,7 +4,7 @@ x-common-config:
   &dbt-common-config
   build:
     context: .
-    dockerfile: Dockerfile.prod
+    dockerfile: Dockerfile.dbt
   volumes:
     - ./seeds:${DBT_PROJECT_DIR}/seeds
     - ./logs:${DBT_PROJECT_DIR}/logs
@@ -26,9 +26,6 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
-    depends_on:
-      serve:
-        condition: service_healthy
 
   serve: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
@@ -43,12 +40,15 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    depends_on:
+      debug:
+        condition: service_completed_successfully
     deploy:
       resources:
         limits:
           cpus: '0.5'
           memory: 512M
-          
+
   build: # Check if can run the following models, seeds, etc. (OPTIONAL)
     <<: *dbt-common-config
     profiles:
