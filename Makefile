@@ -1,17 +1,9 @@
 install_init_reqs:
 	pip install uv
 
-deploy_prod:
+deploy_dbt:
 	docker compose -f 'compose.dbt.prod.yml' down
 	docker compose -f 'compose.dbt.prod.yml' up -d --build --remove-orphans --force-recreate
-
-run_prod_compose:
-	docker compose -f 'compose.dbt.prod.yml' down
-	docker compose -f 'compose.dbt.prod.yml' --profile build up -d --build
-
-run_dev_compose:
-	docker compose -f 'compose.dbt.yml' down
-	docker compose -f 'compose.dbt.yml' up -d --build
 
 run_local:
 	uv run dbt deps
