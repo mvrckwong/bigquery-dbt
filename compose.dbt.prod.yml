@@ -48,6 +48,7 @@ services:
         limits:
           cpus: '0.5'
           memory: 512M
+          
   build: # Check if can run the following models, seeds, etc. (OPTIONAL)
     <<: *dbt-common-config
     profiles:
