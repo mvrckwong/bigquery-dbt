@@ -1,5 +1,7 @@
 {
 	"editor.fontFamily": "'Fira Code Light', Consolas, 'Courier New', monospace",
 	"editor.fontSize": 16,
-	"editor.tabSize": 6
+	"editor.tabSize": 6,
+	"IDX.aI.enableInlineCompletion": true,
+	"IDX.aI.enableCodebaseIndexing": true
 }
