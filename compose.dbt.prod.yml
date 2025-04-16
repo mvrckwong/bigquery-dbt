@@ -1,4 +1,4 @@
-name: dbt-instance-prod
+name: dbt-instance-bigquery-prod
 
 x-common-config:
   &dbt-common-config

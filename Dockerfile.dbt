@@ -1,5 +1,5 @@
 # Stage 1: Builder - Install dependencies
-ARG DBT_VERSION=1.8.2
+ARG DBT_VERSION=1.9.0
 FROM ghcr.io/dbt-labs/dbt-bigquery:$DBT_VERSION AS builder
 
 # Set environment variable
