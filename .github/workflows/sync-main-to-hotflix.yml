@@ -6,6 +6,10 @@ on:
     branches:
       - main
 
+# Add this permissions block
+permissions:
+  contents: write # Grants permission to write repository content (push)
+
 # Prevent concurrent runs for the same branch to avoid race conditions
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
