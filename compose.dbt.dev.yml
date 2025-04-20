@@ -1,0 +1,69 @@
+name: dbt-instance-bigquery-dev
+
+x-common-config:
+  &dbt-common-config
+  build:
+    context: .
+    dockerfile: Dockerfile.dbt
+  volumes:
+    - ./seeds:${DBT_PROJECT_DIR}/seeds
+    - ./logs:${DBT_PROJECT_DIR}/logs
+  env_file:
+    - .env
+  secrets:
+    - source: keyfile_secret
+      target: ${DBT_PROFILES_DIR}/bq-keyfile.json
+      mode: 0444
+  networks:
+    - dbt-network
+
+services:
+  debug: # Check if it can connect to the datawarehouse, etc.
+    <<: *dbt-common-config
+    command: ["debug"]
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  serve: # Check the lineage, models, seeds, etc.
+    <<: *dbt-common-config
+    tty: true
+    entrypoint: /bin/sh
+    command: -c "dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
+    ports:
+      - "${PORT_DBT_UI_PROD:-8888}:8080"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    depends_on:
+      debug:
+        condition: service_completed_successfully
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  build: # Check if can run the following models, seeds, etc. (OPTIONAL)
+    <<: *dbt-common-config
+    profiles:
+      - build
+    command: ["build"]
+    depends_on:
+      serve:
+        condition: service_healthy
+      debug:
+        condition: service_completed_successfully
+
+networks:
+  dbt-network:
+    driver: bridge
+
+secrets:
+  keyfile_secret:
+    file: ./config/bq-keyfile.json
