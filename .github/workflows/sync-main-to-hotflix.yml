@@ -1,4 +1,4 @@
-name: Sync Main to Hotfix
+name: Sync Main to Hotfix Branch
 
 # Trigger the workflow on pushes to the main branch
 on:
@@ -7,8 +7,9 @@ on:
       - main
 
 # Add this permissions block
+# Grants permission to write repository content (push)
 permissions:
-  contents: write # Grants permission to write repository content (push)
+  contents: write 
 
 # Prevent concurrent runs for the same branch to avoid race conditions
 concurrency:
