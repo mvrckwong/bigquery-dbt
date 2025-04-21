@@ -3,7 +3,6 @@ install_init_reqs:
 
 deploy_dbt:
 	docker compose -f 'compose.dbt.prod.yml' down
-	docker network create shared-dbt-airflow-network
 	docker compose -f 'compose.dbt.prod.yml' up -d --build --remove-orphans --force-recreate
 
 deploy_dbt_dev:
