@@ -2,13 +2,13 @@ import secrets
 import argparse
 from typing import Optional
 import sys
+
 from loguru import logger
 
-# Configure Loguru
 logger.remove()
 logger.add(sys.stderr, level="INFO")
 
-DEFAULT_NUM_BYTES = 32
+DEFAULT_NUM_BYTES = 50
 
 def generate_api_key(num_bytes: int = DEFAULT_NUM_BYTES, prefix: Optional[str] = None) -> str:
     """

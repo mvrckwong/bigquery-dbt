@@ -2,11 +2,9 @@ import argparse
 import sys
 from typing import List
 
-# Requires 'cryptography' library: pip install cryptography
 from cryptography.fernet import Fernet
 from loguru import logger
 
-# Configure Loguru
 logger.remove()
 logger.add(sys.stderr, level="INFO")
 
@@ -57,7 +55,6 @@ def main():
 
     # Optional: Could log all keys again at the end if needed,
     # but logging them individually above might be sufficient.
-
     if len(generated_keys) == args.number:
         logger.info("Generation complete.")
     else:
