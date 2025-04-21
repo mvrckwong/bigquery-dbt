@@ -1,6 +1,6 @@
 # This is a Docker Compose file for a dbt instance using BigQuery in production.
 # <project>_<service>_<environment>
-name: general-dbt-prod
+name: general-dbt_bigquery-prod
 
 x-common-config:
   &dbt-common-config
