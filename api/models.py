@@ -4,14 +4,10 @@ from typing import Optional, Dict, Any
 
 class Settings(BaseSettings):
     """Loads settings from environment variables / .env file."""
-    # DBT Paths (Ensure these match .env and docker-compose mounts)
     DBT_PROJECT_DIR: str
-    DBT_PROFILES_DIR: str # Dir CONTAINING profiles.yml
-
-    # API Security
+    DBT_PROFILES_DIR: str
     API_KEY: str
 
-    # Tell pydantic-settings to load from a .env file if present
     class Config:
         env_file = '.env'
         env_file_encoding = 'utf-8'
@@ -29,3 +25,7 @@ class DbtCommandResponse(BaseModel):
 
 class HealthResponse(BaseModel):
     status: str = "ok"
+
+
+if __name__ == "__main__":
+    None
