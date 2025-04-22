@@ -22,7 +22,7 @@ except Exception as e:
     raise
 
 # --- API Key Security Definition ---
-API_KEY_NAME = "X-API-Key" # Standard header name
+API_KEY_NAME = "X-API-Key"
 api_key_header_auth = APIKeyHeader(
     name=API_KEY_NAME, auto_error=True
 )
@@ -55,7 +55,7 @@ router_v1 = APIRouter(
 def run_dbt_command(command_args: list[str]) -> Dict[str, Any]:
     """Runs dbt command, uses Loguru, reads paths from settings."""
     # Settings are already loaded and checked at startup
-    cmd = ['dbt'] + command_args + ['--project-dir', settings.DBT_PROJECT_DIR, '--profiles-dir', settings.DBT_PROFILES_DIR]
+    cmd = ['dbt'] + command_args
     command_str = ' '.join(cmd)
     logger.info(f"Running dbt command: {command_str}")
 
@@ -126,14 +126,5 @@ async def dbt_test(request_body: Optional[DbtRunRequest] = None) -> Dict[str, An
     result = run_dbt_command(command_args)
     return result
 
-# Include the versioned router in the main application
-if __name__ == "__main__":
-	app.include_router(router_v1)
 
-# --- Loguru Configuration (Optional: Add custom formatting, sinks etc.) ---
-# Example: Configure logger to output JSON format if needed for log aggregation
-# logger.add("file.log", rotation="500 MB") # Log to a file
-# logger.add(sys.stderr, format="{time} {level} {message}", level="INFO") # Customize console output
-# logger.configure(handlers=[{"sink": sys.stderr, "serialize": True}]) # JSON logs to stderr
-
-# --- (Uvicorn runs the 'app' instance via docker-compose command) ---
+app.include_router(router_v1)
