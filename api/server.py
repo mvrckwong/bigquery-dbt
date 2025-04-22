@@ -12,17 +12,20 @@ from api.models import DbtRunRequest, DbtCommandResponse, HealthResponse, Settin
 try:
     settings = Settings()
     logger.info("Settings loaded successfully.")
-    # Log loaded paths but mask API key
     logger.info(f"DBT_PROJECT_DIR: {settings.DBT_PROJECT_DIR}")
     logger.info(f"DBT_PROFILES_DIR: {settings.DBT_PROFILES_DIR}")
     logger.info(f"API_KEY: {'*' * (len(settings.API_KEY) - 4) + settings.API_KEY[-4:] if len(settings.API_KEY) > 4 else '****'}")
 except Exception as e:
-    logger.critical(f"FATAL ERROR: Could not load settings. Check .env file and environment variables. Error: {e}")
+    logger.critical(
+        f"FATAL ERROR: Could not load settings. Check .env file and environment variables. Error: {e}"
+    )
     raise
 
 # --- API Key Security Definition ---
 API_KEY_NAME = "X-API-Key" # Standard header name
-api_key_header_auth = APIKeyHeader(name=API_KEY_NAME, auto_error=True)
+api_key_header_auth = APIKeyHeader(
+    name=API_KEY_NAME, auto_error=True
+)
 
 async def verify_api_key(api_key_header: str = Security(api_key_header_auth)):
     """Dependency function to verify the API key provided in the header."""
