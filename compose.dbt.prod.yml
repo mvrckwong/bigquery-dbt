@@ -52,8 +52,22 @@ services:
           cpus: '0.5'
           memory: 512M
 
+  # api-service:
+  #   <<: *dbt-common-config
+  #   entrypoint: ["/bin/sh", "-c"]
+  #   command: ["api:app",
+  #       "--host", "0.0.0.0",
+  #       "--port", "5000",
+  #       "--workers", "2",
+  #       "--log-level", "info"
+  #     ]
+  #   ports:
+  #     - "${PORT_DBT_UI_PROD:-8888}:8080"
+
   runner:
     <<: *dbt-common-config
+    profiles:
+      - debug
     entrypoint: ["/bin/sh", "-c"]
     command: ["while true; do sleep 86400; done"] 
     restart: always
