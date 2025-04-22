@@ -1,3 +1,5 @@
+# General DBT Bigquery - Data Transformation
+
 ## Project Overview
 
 This dbt (data build tool) project is designed to transform raw data into analytics-ready datasets. It follows a modular and layered approach, leveraging dbt's best practices to manage and orchestrate complex data transformations. The project focuses on modeling data from various sources into a structured and efficient data warehouse, ready for business intelligence and analytical use cases.
