@@ -29,7 +29,7 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  serve: # Check the lineage, models, seeds, etc.
+  docs: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
     tty: true
     entrypoint: ["/bin/sh", "-c"]
@@ -52,17 +52,28 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  # api-service:
-  #   <<: *dbt-common-config
-  #   entrypoint: ["/bin/sh", "-c"]
-  #   command: ["api:app",
-  #       "--host", "0.0.0.0",
-  #       "--port", "5000",
-  #       "--workers", "2",
-  #       "--log-level", "info"
-  #     ]
-  #   ports:
-  #     - "${PORT_DBT_UI_PROD:-8888}:8080"
+  api:
+    <<: *dbt-common-config
+    entrypoint: ["uvicorn"]
+    command: [
+        "api.server:app",
+        "--host", "0.0.0.0",
+        "--port", "5000",
+        "--workers", "2",
+        "--log-level", "info"
+      ]
+    ports:
+      - "${PORT_DBT_SERVER:-5051}:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      start_period: 30s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: always
+    depends_on:
+      debug:
+        condition: service_completed_successfully
 
   runner:
     <<: *dbt-common-config
