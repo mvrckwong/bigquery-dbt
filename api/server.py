@@ -4,7 +4,7 @@ from typing import Optional, Dict, Any
 
 from fastapi import FastAPI, HTTPException, status, Depends, APIRouter, Security
 from fastapi.security import APIKeyHeader
-from loguru import logger # Use Loguru logger
+from loguru import logger
 
 from api.models import DbtRunRequest, DbtCommandResponse, HealthResponse, Settings
 
@@ -44,14 +44,14 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# --- API Router for v1 ---
+# API Router for Version 1
 router_v1 = APIRouter(
     prefix="/v1",
     tags=["DBT Execution v1"],
     dependencies=[Depends(verify_api_key)]
 )
 
-# --- Helper Function to Run DBT Commands (Uses Loguru & Settings) ---
+# Helper functions
 def run_dbt_command(command_args: list[str]) -> Dict[str, Any]:
     """Runs dbt command, uses Loguru, reads paths from settings."""
     # Settings are already loaded and checked at startup
