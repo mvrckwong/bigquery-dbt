@@ -1,4 +1,6 @@
-name: dbt-instance-bigquery-prod
+# This is a Docker Compose file for a dbt instance using BigQuery in production.
+# <project>_<service>_<environment>
+name: general-dbt_bigquery-prod
 
 x-common-config:
   &dbt-common-config
@@ -6,8 +8,8 @@ x-common-config:
     context: .
     dockerfile: Dockerfile.dbt
   volumes:
-    - ./seeds:${DBT_PROJECT_DIR}/seeds
-    - ./logs:${DBT_PROJECT_DIR}/logs
+    - ${DBT_CURRENT_DIR}/seeds:${DBT_PROJECT_DIR}/seeds
+    - ${DBT_CURRENT_DIR}/logs:${DBT_PROJECT_DIR}/logs
   env_file:
     - .env
   secrets:
@@ -30,8 +32,8 @@ services:
   serve: # Check the lineage, models, seeds, etc.
     <<: *dbt-common-config
     tty: true
-    entrypoint: /bin/sh
-    command: -c "dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["dbt docs generate && dbt docs serve --port 8080 --host 0.0.0.0"]
     ports:
       - "${PORT_DBT_UI_PROD:-8888}:8080"
     healthcheck:
@@ -40,6 +42,7 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+    restart: always
     depends_on:
       debug:
         condition: service_completed_successfully
@@ -49,20 +52,23 @@ services:
           cpus: '0.5'
           memory: 512M
 
-  build: # Check if can run the following models, seeds, etc. (OPTIONAL)
+  runner:
     <<: *dbt-common-config
-    profiles:
-      - build
-    command: ["build"]
+    entrypoint: ["/bin/sh", "-c"]
+    command: ["while true; do sleep 86400; done"] 
+    restart: always
     depends_on:
-      serve:
-        condition: service_healthy
       debug:
         condition: service_completed_successfully
+    networks:
+      - dbt-airflow-network
 
 networks:
   dbt-network:
     driver: bridge
+  dbt-airflow-network:
+    external: true
+    name: shared-dbt-airflow-network
 
 secrets:
   keyfile_secret:
