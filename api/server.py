@@ -79,7 +79,22 @@ def run_dbt_command(command_args: list[str]) -> Dict[str, Any]:
         logger.exception("An unexpected error occurred during dbt execution.")
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"An unexpected server error occurred: {str(e)}")
 
-# --- API Endpoints ---
+# API Endpoints
+@app.get(
+    "/", # Define path for the root URL
+    tags=["Root"],
+    summary="API Root / Welcome Message",
+    response_model=Dict[str, Any] # Define a basic response structure
+)
+async def read_root():
+    """Provides a welcome message and links to key API sections."""
+    logger.info("Root endpoint '/' accessed.")
+    return {
+        "message": "Welcome to the DBT Runner API!",
+        "api_version": "v1", # Indicate the current version path
+        "documentation": "/docs", # Link to FastAPI auto-docs
+        "health_check": "/health" # Link to health endpoint
+    }
 
 # Health check - Placed on root app, no authentication needed
 @app.get("/health", response_model=HealthResponse, tags=["Health"], summary="Check API health")
