@@ -54,6 +54,8 @@ services:
 
   runner:
     <<: *dbt-common-config
+    profiles:
+      - debug
     entrypoint: ["/bin/sh", "-c"]
     command: ["while true; do sleep 86400; done"] 
     restart: always
