@@ -39,6 +39,15 @@ ENV DBT_PROFILES_DIR=/root/.dbt \
 # Set working directory
 WORKDIR ${DBT_PROJECT_DIR}
 
+# Install Python Dependencies for the API
+COPY requirements.txt .
+RUN python -m pip install --no-cache-dir -r requirements.txt
+
+# --- Set Python Path Directly ---
+# Ensures /usr/app is searchable for python packages like 'api'
+# Overwrites any base image PYTHONPATH (usually not set or needed here)
+ENV PYTHONPATH=${DBT_PROJECT_DIR}
+
 # Copy profiles configuration
 COPY ./config/profiles.yml ${DBT_PROFILES_DIR}/profiles.yml
 
@@ -55,6 +64,10 @@ COPY ./tests ${DBT_PROJECT_DIR}/tests
 COPY ./snapshots ${DBT_PROJECT_DIR}/snapshots
 COPY ./analyses ${DBT_PROJECT_DIR}/analyses
 COPY ./models ${DBT_PROJECT_DIR}/models
+COPY ./api ${DBT_PROJECT_DIR}/api
+
+# Expose the API Port (still useful documentation)
+EXPOSE 5000
 
 # Entry point for the application
 ENTRYPOINT ["dbt"]

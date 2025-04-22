@@ -6,7 +6,7 @@ from fastapi import FastAPI, HTTPException, status, Depends, APIRouter, Security
 from fastapi.security import APIKeyHeader
 from loguru import logger # Use Loguru logger
 
-from .models import DbtRunRequest, DbtCommandResponse, HealthResponse, Settings
+from api.models import DbtRunRequest, DbtCommandResponse, HealthResponse, Settings
 
 # Instantiate settings globally
 try:
@@ -18,7 +18,6 @@ try:
     logger.info(f"API_KEY: {'*' * (len(settings.API_KEY) - 4) + settings.API_KEY[-4:] if len(settings.API_KEY) > 4 else '****'}")
 except Exception as e:
     logger.critical(f"FATAL ERROR: Could not load settings. Check .env file and environment variables. Error: {e}")
-    # Optionally, raise the exception to prevent the app from starting improperly
     raise
 
 # --- API Key Security Definition ---
@@ -36,7 +35,6 @@ async def verify_api_key(api_key_header: str = Security(api_key_header_auth)):
             detail="Invalid or missing API Key",
         )
 
-# --- Initialize FastAPI app ---
 app = FastAPI(
     title="DBT Runner API",
     description="API to trigger dbt commands remotely, with API key auth and versioning.",
