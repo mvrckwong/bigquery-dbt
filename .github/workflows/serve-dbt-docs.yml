@@ -1,0 +1,33 @@
+name: Generate and Deploy dbt Docs
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install UV
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      
+      - name: Install dependencies from pyproject.toml
+        run: |
+          # Install all dependencies from pyproject.toml and update the lockfile if needed
+          uv sync
+      
+      - name: Generate and serve dbt docs
+        run: |
+          uv run dbt docs generate
+          uv run dbt docs serve --port 8888 --no-browser
+      
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: target
+          branch: gh-pages
